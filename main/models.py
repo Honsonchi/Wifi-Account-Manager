@@ -51,13 +51,13 @@ class UserInfo(models.Model):
 # 載具
 class Device(models.Model):
     # 載具名稱
-    Name = models.CharField('載具名稱')
+    Name = models.CharField('載具名稱', max_length=100)
 
     # 載具從屬人
     Owner = models.ForeignKey(User, verbose_name="擁有人", on_delete=models.CASCADE)
 
-    # 載具卡號
-    Id = models.CharField('載具卡號')
+    # MAC位址
+    Id = models.CharField('MAC位址', max_length=12)
 
     # 備註
     Note = models.TextField('備註', blank=True, null=True)
@@ -65,7 +65,7 @@ class Device(models.Model):
 # 群組
 class Group(models.Model):
     # 群組名稱
-    Name = models.CharField('群組名稱')
+    Name = models.CharField('群組名稱', max_length=100)
 
     # 身分
     UserData = models.ManyToManyField(UserInfo, verbose_name="身分")
