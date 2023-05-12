@@ -49,12 +49,12 @@ class UserInfo(models.Model):
     Note = models.TextField('備註', blank=True, null=True)
 
     def __str__(self):
-        if self.UserType == 2:
-            return f'{self.Grade}年{self.Class}班{self.SeatNumber}號 - {self.Name}'
+        if self.UserType == 0:
+            return f'管理員 {self.Name}'
         elif self.UserType == 1:
-            return f'教師 - {self.Name}'
+            return f'教師 {self.Name}'
         else:
-            return f'管理員 - {self.Name}'
+            return f'{self.Grade}{self.Class:02d}{self.SeatNumber:02d} {self.Name}'
 
 # 載具
 class Device(models.Model):
@@ -71,11 +71,12 @@ class Device(models.Model):
     Note = models.TextField('備註', blank=True, null=True)
 
     def __str__(self):
-        if self.Owner.UserType == 2:
-            return f'{self.MacAddress} | {self.Owner.Grade}年{self.Owner.Class}班{self.Owner.SeatNumber}號 - {self.Owner.Name} 的 {self.Name}'
+        if self.Owner.UserType == 0:
+            return f'{self.MacAddress} | 管理員 {self.Owner.Name} 的 {self.Name}'
+        elif self.Owner.UserType == 1:
+            return f'{self.MacAddress} | 教師 {self.Owner.Name} 的 {self.Name}'
         else:
-            return f'{self.MacAddress} | {self.Owner.Name} 的 {self.Name}'
-        
+            return f'{self.MacAddress} | {self.Owner.Grade}{self.Owner.Class:02d}{self.Owner.SeatNumber:02d} {self.Owner.Name} 的 {self.Name}'
 
 # 群組
 class Group(models.Model):

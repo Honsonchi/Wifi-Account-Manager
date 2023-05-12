@@ -1,18 +1,39 @@
 {% extends 'base.html' %}
 
-{% block title%}裝置管理{% endblock title %}
+{% block title%}所有裝置{% endblock title %}
 
 {% block body %}
 
+<a href="{% url 'device_create' %}">新增裝置</a>
+
 {% for device in devices %}
     {% if device.Owner.UserType == 2 %}
-        <p>{{ device.MacAddress }} | {{ device.Owner.Grade }}年{{ device.Owner.Class }}班{{ device.Owner.SeatNumber }}號 - {{ device.Owner.Name }} 的 {{ device.Name }}</p>
+        <div>
+            <p>{{ device.Owner.Grade }}{{ device.Owner.Class|stringformat:"02i" }}{{ device.Owner.SeatNumber|stringformat:"02i" }} {{ device.Owner.Name }}</p>
+            <p>{{ device.Name }}</p>
+            <p>{{ device.MacAddress }}</p>
+        </div>
+    {% elif device.Owner.UserType == 1 %}
+        <div>
+            <p>老師 - {{ device.Owner.Name }}</p>
+            <p>{{ device.Name }}</p>
+            <p>{{ device.MacAddress }}</p>
+        </div>
     {% else %}
-        <p>{{ device.MacAddress }} | {{ device.Owner.Name }} 的 {{ device.Name }}</p>
+        <div>
+            <p>管理員 - {{ device.Owner.Name }}</p>
+            <p>{{ device.Name }}</p>
+            <p>{{ device.MacAddress }}</p>
+        </div>
     {% endif %}
+    <a href="{% url 'device_edit' device.id %}">編輯</a>
+    <a href="{% url 'device_delete' device.id %}">刪除</a>
 {% endfor %}
 
 {% endblock body %}
+
+
+
 
 
 
