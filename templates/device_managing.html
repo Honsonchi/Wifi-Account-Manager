@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title%}裝置管理{% endblock title %}
+
+{% block body %}
+
+{% for device in devices %}
+    {% if device.Owner.UserType == 2 %}
+        <p>{{ device.MacAddress }} | {{ device.Owner.Grade }}年{{ device.Owner.Class }}班{{ device.Owner.SeatNumber }}號 - {{ device.Owner.Name }} 的 {{ device.Name }}</p>
+    {% else %}
+        <p>{{ device.MacAddress }} | {{ device.Owner.Name }} 的 {{ device.Name }}</p>
+    {% endif %}
+{% endfor %}
+
+{% endblock body %}
+
+
+

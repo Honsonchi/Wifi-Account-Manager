@@ -21,7 +21,7 @@ class UserInfo(models.Model):
     Name = models.CharField('姓名', max_length=75)
 
     # 學號
-    Id = models.IntegerField('學號')
+    StuId = models.IntegerField('學號')
 
     # Email
     Email = models.EmailField('Email', blank=True, null=True)
@@ -43,10 +43,18 @@ class UserInfo(models.Model):
     Class = models.IntegerField('班級')
 
     # 座號
-    SearNumber = models.IntegerField('座號')
+    SeatNumber = models.IntegerField('座號')
 
     # 備註
     Note = models.TextField('備註', blank=True, null=True)
+
+    def __str__(self):
+        if self.UserType == 2:
+            return f'{self.Grade}年{self.Class}班{self.SeatNumber}號 - {self.Name}'
+        elif self.UserType == 1:
+            return f'教師 - {self.Name}'
+        else:
+            return f'管理員 - {self.Name}'
 
 # 載具
 class Device(models.Model):
@@ -54,13 +62,20 @@ class Device(models.Model):
     Name = models.CharField('載具名稱', max_length=100)
 
     # 載具從屬人
-    Owner = models.ForeignKey(User, verbose_name="擁有人", on_delete=models.CASCADE)
+    Owner = models.ForeignKey(UserInfo, verbose_name="擁有人", on_delete=models.CASCADE)
 
     # MAC位址
-    Id = models.CharField('MAC位址', max_length=12)
+    MacAddress = models.CharField('MAC位址', max_length=12)
 
     # 備註
     Note = models.TextField('備註', blank=True, null=True)
+
+    def __str__(self):
+        if self.Owner.UserType == 2:
+            return f'{self.MacAddress} | {self.Owner.Grade}年{self.Owner.Class}班{self.Owner.SeatNumber}號 - {self.Owner.Name} 的 {self.Name}'
+        else:
+            return f'{self.MacAddress} | {self.Owner.Name} 的 {self.Name}'
+        
 
 # 群組
 class Group(models.Model):
@@ -72,3 +87,6 @@ class Group(models.Model):
 
     # 備註
     Note = models.TextField('備註', blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.Name}'
