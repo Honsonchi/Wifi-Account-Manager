@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}大直高中無線網路{% endblock title %}
+
+{% block body %}
+
+<p>首頁</p>
+
+{% if user.is_authenticated %}
+    {{ now_user }}，歡迎
+{% else %}
+    請登入系統
+    <a href="{% url 'login' %}"><p>登入</p></a>
+
+    <p>沒有帳號？請至資訊組詢問狀況。</p>
+
+    <p>預設帳號：？？？</p>
+    <p>預設密碼：？？？</p>
+{% endif %}
+
+{% endblock body %}

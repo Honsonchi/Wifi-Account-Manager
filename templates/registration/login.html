@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}登入{% endblock title %}
+
+{% block body %}
+
+<p>登入</p>
+<p>以享受所有服務</p>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {% for message in form.non_field_errors %}
+        {{message}}
+    {% endfor %}
+
+    <p>
+        <label for="username">使用者名稱：</label>
+        <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username" placeholder="使用者名稱">
+    </p>
+
+    <p>
+        <label for="username">密碼：</label>
+        <input type="password" name="password" autocomplete="current-password" required="" id="id_password" placeholder="密碼">
+    </p>
+
+    <input type="submit" value="登入">
+
+    <p>沒有帳號？請至資訊組詢問狀況。</p>
+
+    <p>預設帳號：？？？</p>
+    <p>預設密碼：？？？</p>
+{% endblock body %}
