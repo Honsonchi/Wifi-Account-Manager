@@ -73,6 +73,7 @@ class DeviceEdit(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
                 return super().form_valid(form)
             else:
                 raise PermissionDenied()
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -101,6 +102,7 @@ class DeviceDelete(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
                 return super().form_valid(form)
             else:
                 raise PermissionDenied()
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

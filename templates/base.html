@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title%}{% endblock title %} </title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <div>
         <a href="{% url 'homepage' %}">
-            <img src="https://upload.wikimedia.org/wikipedia/zh/7/7b/DZSHlogo.gif">
+            <img src="{% static 'img/DZSHlogo.gif' %}" alt="大直高中校徽">
             <p>大直高中無線網路</p>
         </a>
 

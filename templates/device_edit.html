@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {% if device.Owner == now_user or now_user.Owner.UserType == 0 %}
+    {% if device.Owner == now_user or now_user.UserType == 0 %}
         {% if device.Owner.UserType == 2 %}
             {{ device.Owner.Grade }}{{ device.Owner.Class|stringformat:"02i" }}{{ device.Owner.SeatNumber|stringformat:"02i" }} {{ device.Owner.Name }} 的 {{ device.Name }}
         {% elif device.Owner.UserType == 1 %}
@@ -15,7 +15,7 @@
 {% endblock title %}
 
 {% block body %}
-    {% if device.Owner == now_user or now_user.Owner.UserType == 0 %}
+    {% if device.Owner == now_user or now_user.UserType == 0 %}
         <p>{% if device.Owner.UserType == 2 %}{{ device.Owner.Grade }}{{ device.Owner.Class|stringformat:"02i" }}{{ device.Owner.SeatNumber|stringformat:"02i" }} {{ device.Owner.Name }} 的 {{ device.Name }}{% elif device.Owner.UserType == 1 %}老師 {{ device.Owner.Name }} 的 {{ device.Name }}{% else %}管理員 {{ device.Owner.Name }} 的 {{ device.Name }}{% endif %}</p>
 
         <form action="" method="post">
