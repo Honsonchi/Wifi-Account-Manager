@@ -7,16 +7,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title%}{% endblock title %} </title>
-    <link rel="stylesheet" href="css.css">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
     <div>
-        <a href="{% url 'homepage' %}"><p>大直高中無線網路</p></a>
-        {% if user.is_authenticated %}
-            {{ now_user }}
+        <a href="{% url 'homepage' %}">
+            <img src="https://upload.wikimedia.org/wikipedia/zh/7/7b/DZSHlogo.gif">
+            <p>大直高中無線網路</p>
+        </a>
 
-            <a href="{% url 'logout' %}"><p>登出</p></a>
-            <a href="{% url 'password' %}"><p>變更密碼</p></a>
+        <p>目前權限：{{ perms.main }}</p>
+
+        {% if user.is_authenticated %}
+            {% if perms.main.admin %}
+                
+            {% endif %}
+            
+            <a href="{% url 'device_managing' %}">
+                <p>裝置管理</p>
+            </a>
+
+            {{ now_user }}
+            <a href="{% url 'logout' %}">
+                <p>登出</p>
+            </a>
+            <a href="{% url 'password' %}">
+                <p>變更密碼</p>
+            </a>
         {% else %}
             <a href="{% url 'login' %}"><p>登入</p></a>
         {% endif %}

@@ -1,24 +1,30 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    刪除 
-    {% if device.Owner.UserType == 2 %}
-        {{ device.Owner.Grade }}{{ device.Owner.Class|stringformat:"02i" }}{{ device.Owner.SeatNumber|stringformat:"02i" }} {{ device.Owner.Name }} 的 {{ device.Name }}
-    {% elif device.Owner.UserType == 1 %}
-        老師 {{ device.Owner.Name }} 的 {{ device.Name }}
+    {% if device.Owner == now_user or now_user.Owner.UserType == 0 %}
+        刪除 
+        {% if device.Owner.UserType == 2 %}
+            {{ device.Owner.Grade }}{{ device.Owner.Class|stringformat:"02i" }}{{ device.Owner.SeatNumber|stringformat:"02i" }} {{ device.Owner.Name }} 的 {{ device.Name }}
+        {% elif device.Owner.UserType == 1 %}
+            老師 {{ device.Owner.Name }} 的 {{ device.Name }}
+        {% else %}
+            管理員 {{ device.Owner.Name }} 的 {{ device.Name }}
+        {% endif %}
     {% else %}
-        管理員 {{ device.Owner.Name }} 的 {{ device.Name }}
+        沒有權限
     {% endif %}
 {% endblock title %}
 
 {% block body %}
+    {% if device.Owner == now_user or now_user.Owner.UserType == 0 %}
+        <p>刪除 {% if device.Owner.UserType == 2 %}{{ device.Owner.Grade }}{{ device.Owner.Class|stringformat:"02i" }}{{ device.Owner.SeatNumber|stringformat:"02i" }} {{ device.Owner.Name }} 的 {{ device.Name }}{% elif device.Owner.UserType == 1 %}老師 {{ device.Owner.Name }} 的 {{ device.Name }}{% else %}管理員 {{ device.Owner.Name }} 的 {{ device.Name }}{% endif %}</p>
 
-<p>刪除 {% if device.Owner.UserType == 2 %}{{ device.Owner.Grade }}{{ device.Owner.Class|stringformat:"02i" }}{{ device.Owner.SeatNumber|stringformat:"02i" }} {{ device.Owner.Name }} 的 {{ device.Name }}{% elif device.Owner.UserType == 1 %}老師 {{ device.Owner.Name }} 的 {{ device.Name }}{% else %}管理員 {{ device.Owner.Name }} 的 {{ device.Name }}{% endif %}</p>
-
-<form action="" method="post">
-    {% csrf_token %}
-    <input type="submit" value="確認刪除">
-    <input type="button" value="取消" onclick="javascript:window.history.back();">
-</form>
-
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="submit" value="確認刪除">
+            <input type="button" value="取消" onclick="javascript:window.history.back();">
+        </form>
+    {% else %}
+        您無法刪除他人的裝置
+    {% endif %}
 {% endblock body %}

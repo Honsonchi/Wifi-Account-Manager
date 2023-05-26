@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}伺服器錯誤{% endblock title %}
+
+{% block body %}
+
+<p>500 Internal Server Error</P>
+<p>500 伺服器錯誤</P>
+
+<p>伺服器錯誤，請重試您的動作</P>
+
+<p>若這個錯誤持續發生，請通知資訊組</P>
+
+<button onclick="javascript:window.history.back();">回上一頁</button>
+{% endblock body %}

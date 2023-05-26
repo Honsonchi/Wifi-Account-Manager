@@ -91,3 +91,11 @@ class Group(models.Model):
 
     def __str__(self):
         return f'{self.Name}'
+
+# 自訂權限
+class PermissionSupport(models.Model):
+    class Meta():
+        managed = False # 不會再Database中創建表
+        default_permissions = () # 刪除預設權限
+        permissions = [('admin', 'Admin can use this service'),
+                       ('can_assess', 'Can assess')]
