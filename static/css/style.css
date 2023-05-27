@@ -1,5 +1,229 @@
 *{
     /* 方便觀察用 */
     /* border: 1px black solid; */
+
+    --color-dcsh-blue-0: #004786;
+    --color-dcsh-blue-1: #005faf;
+    --color-dcsh-blue-2: #4f92e8;
+    --color-dcsh-blue-3: #ebf1ff;
+    --color-gray-1: #a6a6a6;
+    --color-white: #ffffff;
+
+    --radius-1: 16px;
+    --radius-2: 12px;
+    --radius-3: 8px;
+    --radius-4: 4px;
+
+    --shadow-1: 0rem 0rem 2rem rgba(0, 0, 0, 0.16);
+    --shadow-2: 0rem 0rem 0.5rem rgba(0, 0, 0, 0.16);
+    
+    --font: 'Noto Sans', 'Noto Sans TC', 'sans-serif';
 }
 
+/* Set default font family and size */
+body {
+    font-family: var(--font);
+    font-size: 12pt;
+}
+
+a{
+    text-decoration: none;
+}
+
+.nav-bar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /*background-color: rgb(81, 81, 82);*/ /* 添加背景顏色 */
+    /*color: white;*/ /* 文字顏色為白色 */
+}
+
+.nav-bar > a:last-child{
+    margin-left: auto;
+    text-decoration: none;
+}
+/* Style the header */
+.header {
+    background-color: #f2f2f2;
+    padding: 20px;
+    text-align: center;
+}
+
+.header-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2a57d1; /*chatgpt好神*/
+}
+
+.header-logo {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px; /* 可根據需要調整圖片和文字之間的間距 */
+    width: 80px;
+}
+
+.header-title {
+    display: inline-block;
+    vertical-align: middle;
+}
+  
+
+#homepage-button{
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(221, 105, 10);
+}
+
+#login-button {
+    margin-left: auto;
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: large;}
+  
+#login-button:hover {
+    background-color: #45a049;
+}
+
+/* ----------------Logo---------------- */
+
+.logo{
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo > div{
+    background-image: url("/static/img/DCSHLogoVector.svg");
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    height: 2.25rem;
+    width: 3.46304413289rem;
+
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.logo > p{
+    color: var(--color-dcsh-blue-1);
+
+    font-size: 1.75rem;
+    font-weight: 500;
+
+    display: inline;
+    vertical-align: middle;
+    padding-left: 1.25rem;
+    text-decoration: none;
+}
+
+/* ------------------------------------ */
+
+
+/* ----------------Form---------------- */
+
+.large-input{
+    background-color: var(--color-white);
+    border: var(--color-gray-1) solid 0.25px;
+    border-radius: var(--radius-4);
+    color: var(--color-gray-1);
+
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-indent: 1.05rem;
+
+    height: 3.375rem;
+}
+
+.large-primary-button{
+    background-color: var(--color-dcsh-blue-1);
+    border: none;
+    border-radius: var(--radius-4);
+    color: var(--color-white);
+
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    padding-left: 1.3rem;
+    padding-right: 1.3rem;
+
+    height: 3.375rem;
+
+    transition: 100ms;
+}
+
+.large-primary-button:hover{
+    background-color: var(--color-dcsh-blue-0);
+    box-shadow: var(--shadow-2);
+}
+
+.large-primary-button:active{
+    background-color: var(--color-dcsh-blue-0);
+    box-shadow: var(--shadow-2);
+
+    transform: scale(90%);
+    filter: brightness(75%);
+}
+
+/* ------------------------------------ */
+
+
+/* -------------Login Form------------- */
+
+.login-form-title{
+    font-size: 2.25rem;
+    font-weight: 700;
+}
+
+.login-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.login-form .form-card{
+    background-color: var(--color-white);
+    border-radius: var(--radius-1);
+    box-shadow: var(--shadow-1);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 35rem;
+    height: 42.75rem;
+}
+
+.login-form form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 25.5rem;
+}
+
+.login-form .forget{
+    align-self: flex-start; 
+}
+
+.login-form form>p, .login-form form>p>input[type="text"]{
+    width: 100%;
+}
+.login-form form>p, .login-form form>p>input[type="password"]{
+    width: 100%;
+}
+
+.login-form input[type="submit"]{
+    align-self: flex-end; 
+}
+
+/* ------------------------------------ */

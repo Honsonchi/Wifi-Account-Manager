@@ -7,16 +7,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title%}{% endblock title %} </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Noto+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div>
+    <div class="nav-bar">
         <a href="{% url 'homepage' %}">
-            <img src="{% static 'img/DZSHlogo.gif' %}" alt="大直高中校徽">
-            <p>大直高中無線網路</p>
+            <div class="logo">
+                <div></div>
+                <p>無線網路管理系統</p>
+            </div>
         </a>
 
-        <p>目前權限：{{ perms.main }}</p>
+        <p id="homepage-button">首頁</p>
 
         {% if user.is_authenticated %}
             {% if perms.main.admin %}
@@ -35,7 +40,7 @@
                 <p>變更密碼</p>
             </a>
         {% else %}
-            <a href="{% url 'login' %}"><p>登入</p></a>
+        <a href="{% url 'login' %}"><button id="login-button">登入</button></a>
         {% endif %}
     </div>
 
