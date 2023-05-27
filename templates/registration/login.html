@@ -5,37 +5,39 @@
 {% block body %}
 
 <div class="login-form">
-    <div class="form-card">
-        <a href="{% url 'homepage' %}">
-            <div class="logo">
-                <div></div>
-                <p>無線網路管理系統</p>
-            </div>
-        </a>
+    <form action="" method="post">
+        <div class="login-form-info">
+            <a href="{% url 'homepage' %}">
+                <div class="logo">
+                    <div></div>
+                    <p>無線網路管理系統</p>
+                </div>
+            </a>
+            <p class="login-form-title">登入</p>
     
-        <p class="login-form-title">登入</p>
-    
-        <form action="" method="post">
             {% csrf_token %}
             {% for message in form.non_field_errors %}
                 {{message}}
             {% endfor %}
     
-            <p>
-                <input class="large-input" type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username" placeholder="使用者名稱">
-            </p>
+            <div class="large-input">
+                <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username">
+                <label>使用者名稱</label>
+            </div>
     
-            <p>
-                <input class="large-input" type="password" name="password" autocomplete="current-password" required="" id="id_password" placeholder="密碼">
-            </p>
-
-            <p class="forget">
-                <a href="">忘記密碼？</a>
-            </p>
-
-            <input class="large-primary-button" type="submit" value="登入">
-        </form>
+            <div class="large-input">
+                <input type="password" name="password" autocomplete="current-password" required="" id="id_password">
+                <label>密碼</label>
+            </div>
+    
+            <div class="login-form-submit">
+                <p class="forget">
+                    <a href="">忘記密碼？</a>
+                </p>
         
-    </div>
+                <input class="large-primary-button" type="submit" value="登入">
+            </div>
+        </div>
+    </form>
 </div>
 {% endblock body %}

@@ -18,6 +18,8 @@
     --shadow-2: 0rem 0rem 0.5rem rgba(0, 0, 0, 0.16);
     
     --font: 'Noto Sans', 'Noto Sans TC', 'sans-serif';
+
+    --animation-speed: 100ms;
 }
 
 /* Set default font family and size */
@@ -129,16 +131,53 @@ a{
 /* ----------------Form---------------- */
 
 .large-input{
+    position: relative;
+    margin-left: 1%;
+}
+
+.large-input input{
     background-color: var(--color-white);
     border: var(--color-gray-1) solid 0.25px;
     border-radius: var(--radius-4);
-    color: var(--color-gray-1);
-
+    outline: none;
+    
     font-size: 1.25rem;
-    font-weight: 700;
     text-indent: 1.05rem;
 
+    padding: 0;
+    margin: 0;
+    width: 99%;
     height: 3.375rem;
+}
+
+.large-input label{
+    font-size: 1.25rem;
+
+    position: absolute;
+    left: 0;
+    margin-top: 0.8rem;
+    margin-left: 1.2rem;
+    
+    pointer-events: none;
+
+    transition: var(--animation-speed);
+}
+
+.large-input input:valid ~ label,
+.large-input input:focus ~ label{
+    color: var(--color-dcsh-blue-0);
+    background-color: var(--color-white);
+
+    font-size: 0.85rem;
+
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    transform: translateY(-1.4875rem); /* -0.8-font-size/2-0.2625 */
+}
+
+.large-input input:valid,
+.large-input input:focus{
+    border-color: var(--color-dcsh-blue-0);
 }
 
 .large-primary-button{
@@ -179,6 +218,7 @@ a{
 .login-form-title{
     font-size: 2.25rem;
     font-weight: 700;
+    margin: 0;
 }
 
 .login-form{
@@ -188,7 +228,7 @@ a{
     height: 100%;
 }
 
-.login-form .form-card{
+.login-form form{
     background-color: var(--color-white);
     border-radius: var(--radius-1);
     box-shadow: var(--shadow-1);
@@ -202,28 +242,26 @@ a{
     height: 42.75rem;
 }
 
-.login-form form{
+.login-form .login-form-info{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 
     width: 25.5rem;
+    height: 25rem;
 }
 
-.login-form .forget{
-    align-self: flex-start; 
-}
+.login-form .login-form-submit{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-.login-form form>p, .login-form form>p>input[type="text"]{
     width: 100%;
 }
-.login-form form>p, .login-form form>p>input[type="password"]{
-    width: 100%;
-}
 
-.login-form input[type="submit"]{
-    align-self: flex-end; 
+.login-form .large-input{
+    width: 100%;
 }
 
 /* ------------------------------------ */
