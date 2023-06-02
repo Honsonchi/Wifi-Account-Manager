@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    刪除群組 {{ group.Name }}
+{% endblock title %}
+
+{% block body %}
+    <p>刪除群組 {{ group.Name }}</p>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="確認刪除">
+        <input type="button" value="取消" onclick="javascript:window.history.back();">
+    </form>
+{% endblock body %}

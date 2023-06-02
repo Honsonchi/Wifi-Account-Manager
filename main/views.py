@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
-from .models import UserInfo, Device
+from .models import UserInfo, Device, Group
 from .form import DeviceForm
 
 # 首頁
@@ -140,3 +140,99 @@ class DeviceCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     pk_url_kwarg = 'deviceid'
     context_object_name = 'device'
     template_name = 'device_create.html'
+
+#管理員: 群組管理
+class GroupManaging(PermissionRequiredMixin, LoginRequiredMixin, ListView):
+    model = Group
+    permission_required = ['main.can_assess', 'main.admin']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['now_user'] = UserInfo.objects.get(UserData=self.request.user)
+        else:
+            context['now_user'] = ''
+        return context
+    
+    context_object_name = 'groups'
+    template_name = 'group_managing.html'
+
+#管理員: 群組編輯
+class GroupEdit(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+    model = Group
+    permission_required = ['main.can_assess', 'main.admin']
+    
+    fields = ['Name', 'UserData', 'Tag', 'Note']
+
+    def get_success_url(self):
+        return reverse_lazy('group_managing')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['now_user'] = UserInfo.objects.get(UserData=self.request.user)
+        else:
+            context['now_user'] = ''
+        return context
+
+    pk_url_kwarg = 'groupid'
+    context_object_name = 'group'
+    template_name = 'group_edit.html'
+
+# 管理員: 群組刪除
+class GroupDelete(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
+    model = Group
+    permission_required = ['main.can_assess', 'main.admin']
+    
+    def get_success_url(self):
+        return reverse_lazy('group_managing')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['now_user'] = UserInfo.objects.get(UserData=self.request.user)
+        else:
+            context['now_user'] = ''
+        return context
+
+    pk_url_kwarg = 'groupid'
+    context_object_name = 'group'
+    template_name = 'group_delete.html'
+
+# 裝置創建
+class GroupCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
+    model = Group
+    permission_required = ['main.can_assess', 'main.admin']
+
+    fields = ['Name', 'UserData', 'Tag', 'Note']
+
+    def get_success_url(self):
+        return reverse_lazy('group_managing')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['now_user'] = UserInfo.objects.get(UserData=self.request.user)
+        else:
+            context['now_user'] = ''
+        return context
+
+    pk_url_kwarg = 'groupid'
+    context_object_name = 'group'
+    template_name = 'group_create.html'
+
+#管理員管理
+class Manage(PermissionRequiredMixin, LoginRequiredMixin, ListView):
+    model = Device
+    permission_required = ['main.can_assess', 'main.admin']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['now_user'] = UserInfo.objects.get(UserData=self.request.user)
+        else:
+            context['now_user'] = ''
+        return context
+    
+    context_object_name = 'devices'
+    template_name = 'manage.html'

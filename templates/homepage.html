@@ -4,17 +4,25 @@
 
 {% block body %}
 
-<p>首頁</p>
+<!--<p>首頁</p>
 
 <p>歡迎使用大直高中無線網路帳號管理系統</p>
 
-<hr>
+<hr>-->
 
 {% if user.is_authenticated %}
     {{ now_user }}，歡迎
+    <a href="{% url 'device_managing' %}">
+        <p id="device_managing-button">我的裝置</p>
+    </a>
+    <a href="{% url 'manage' %}">
+        <p>裝置管理</p>
+    </a>
 {% else %}
     <p>請登入系統以使用服務</p>
-    <a href="{% url 'login' %}"><p>登入</p></a>
+    <a href="{% url 'login' %}">
+        <button class="button">登入</button>
+    </a>
 
     <p>沒有帳號？請至資訊組詢問狀況。</p>
 
@@ -23,3 +31,9 @@
 {% endif %}
 
 {% endblock body %}
+
+
+
+
+
+

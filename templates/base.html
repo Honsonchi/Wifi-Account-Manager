@@ -20,27 +20,36 @@
                 <p>無線網路管理系統</p>
             </div>
         </a>
-
-        <p id="homepage-button">首頁</p>
+        <a href="{% url 'homepage' %}">
+            <p id="homepage-button">首頁</p>
+            </a>
 
         {% if user.is_authenticated %}
-            {% if perms.main.admin %}
-                
-            {% endif %}
-            
             <a href="{% url 'device_managing' %}">
-                <p>裝置管理</p>
+                <p>我的裝置</p>
             </a>
+
+            {% if perms.main.admin %}
+                <a href="{% url 'manage' %}">
+                    <p>裝置管理</p>
+                </a>
+                <a href="{% url 'group_managing' %}">
+                    <p>群組管理</p>
+                </a>
+            {% endif %}
 
             {{ now_user }}
             <a href="{% url 'logout' %}">
-                <p>登出</p>
+                <button class="button">登出</button>
             </a>
             <a href="{% url 'password' %}">
                 <p>變更密碼</p>
             </a>
+
         {% else %}
-        <a href="{% url 'login' %}"><button id="login-button">登入</button></a>
+        <a href="{% url 'login' %}">
+            <button class="button">登入</button>
+        </a>
         {% endif %}
     </div>
 

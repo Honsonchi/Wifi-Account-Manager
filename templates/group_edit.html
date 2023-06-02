@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    編輯群組 {{ group.Name }}
+{% endblock title %}
+
+{% block body %}
+
+{{ group.Name }}
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="確定">
+    <input type="button" value="返回" onclick="javascript:window.history.back();">
+</form>
+
+{% endblock body %}

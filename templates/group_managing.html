@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    群組管理
+{% endblock title %}
+
+{% block body %}
+<a href="{% url 'group_create' %}">新增群組</a>
+
+{% for group in groups %}
+    <div>
+        {{ group.Name }}
+    </div>
+    <a href="{% url 'group_edit' group.id %}">編輯</a>
+    <a href="{% url 'group_delete' group.id %}">刪除</a>
+{% endfor %}
+
+{% endblock body %}
