@@ -110,6 +110,15 @@ a{
 #device_managing-button {
     color: rgb(47, 69, 139);
 }
+
+#manage-button {
+    color: #005faf;
+}
+
+#group_managing-button {
+    color: #005faf;
+}
+
 /* ----------------Logo---------------- */
 
 .logo{
@@ -293,13 +302,42 @@ a{
 
 /* ------------------------------------ */
 /* ---------------我的裝置------------- */
-table {
+/*table {
     border-collapse: collapse;
     width: 100%;
   }
   
   th, td {
-    border: 1px solid black;
+    border: 1px solid rgb(0, 0, 0);
     padding: 8px;
     text-align: left;
+  }*/
+
+
+/*----------------裝置管理---------------- */
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    
   }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border: 2px solid rgba(0, 0, 0, 0.16);
+  }
+  
+  th {
+    background-color: #333;
+    color: white;
+  }
+  
+  tr.odd {
+    background-color: #f2f2f2;
+  }
+  
+  tr.even {
+    background-color: #e6e6e6;
+  }
+  

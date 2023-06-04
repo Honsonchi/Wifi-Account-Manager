@@ -13,11 +13,16 @@
 {% if user.is_authenticated %}
     {{ now_user }}，歡迎
     <a href="{% url 'device_managing' %}">
-        <p id="device_managing-button">我的裝置</p>
+        <button id="device_managing-button">我的裝置</button>
     </a>
     <a href="{% url 'manage' %}">
-        <p>裝置管理</p>
+        <button id="manage-button" >裝置管理</button>
     </a>
+    <!--{% if perms.main.admin %}
+            <a href="{% url 'group_managing' %}">
+                <button id="group_managing-button">群組管理</button>
+            </a>
+            {%endif%}-->
 {% else %}
     <p>請登入系統以使用服務</p>
     <a href="{% url 'login' %}">
