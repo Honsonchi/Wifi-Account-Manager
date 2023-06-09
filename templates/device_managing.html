@@ -4,36 +4,43 @@
 
 {% block body %}
 
-<a href="{% url 'device_create' %}">新增裝置</a>
+<div class="container">
+    <div class="head">
+        <p class="title">我的裝置</p>
+        <a href="{% url 'device_create' %}">
+            <button class="rect-button button-ani">
+                <div class="icon"></div>
+                <p>我的裝置</p>
+            </button>
+        </a>
+    </div>
+    <div class="hr"></div>
+    <div class="big-blocks">
+        {% for device in devices %}
+            <div class="big_ctx_block">
+                <div class="icon"></div>
+                <div class="head">
+                    <p>{{ device.Name }}</p>
+                    <p>{{ device.MacAddress|slice:"0:2" }}:{{ device.MacAddress|slice:"2:4" }}:{{ device.MacAddress|slice:"4:6" }}:{{ device.MacAddress|slice:"6:8" }}:{{ device.MacAddress|slice:"8:10" }}:{{ device.MacAddress|slice:"10:12" }}</p>
+                </div>
+                <a href="{% url 'device_edit' device.id %}">
+                    <button class="sqr-button button-ani">
+                        <div class="icon icon-devices"></div>
+                        <p>編輯裝置</p>
+                    </button>
+                </a>
+                <a href="{% url 'device_delete' device.id %}">
+                    <button class="sqr-button button-ani">
+                        <div class="icon icon-devices"></div>
+                        <p>刪除裝置</p>
+                    </button>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 
 
-<table>
-  <tr>
-    <th>使用者</th>
-    <th>裝置名稱</th>
-    <th>MAC位址</th>
-    <th>操作</th>
-  </tr>
-  {% for device in devices %}
-    <tr>
-      <td>
-        {% if device.Owner.UserType == 2 %}
-          {{ device.Owner.Grade }}{{ device.Owner.Class|stringformat:"02i" }}{{ device.Owner.SeatNumber|stringformat:"02i" }} {{ device.Owner.Name }}
-        {% elif device.Owner.UserType == 1 %}
-          老師 - {{ device.Owner.Name }}
-        {% else %}
-          管理員 - {{ device.Owner.Name }}
-        {% endif %}
-      </td>
-      <td>{{ device.Name }}</td>
-      <td>{{ device.MacAddress }}</td>
-      <td>
-        <a href="{% url 'device_edit' device.id %}">編輯</a>
-        <a href="{% url 'device_delete' device.id %}">刪除</a>
-      </td>
-    </tr>
-  {% endfor %}
-</table>
 {% endblock body %}
 
 

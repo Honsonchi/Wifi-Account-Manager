@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}大直高中無線網路{% endblock title %}
 
 {% block body %}
@@ -11,18 +13,31 @@
 <hr>-->
 
 {% if user.is_authenticated %}
-    {{ now_user }}，歡迎
-    <a href="{% url 'device_managing' %}">
-        <button id="device_managing-button">我的裝置</button>
-    </a>
-    <a href="{% url 'manage' %}">
-        <button id="manage-button" >裝置管理</button>
-    </a>
-    <!--{% if perms.main.admin %}
-            <a href="{% url 'group_managing' %}">
-                <button id="group_managing-button">群組管理</button>
-            </a>
-            {%endif%}-->
+    <div class="user-info">
+        <div>
+            <p>{{ now_user }}</p>
+            <p>{{ now_user.Email }}</p>
+        </div>
+        <div></div>
+        <div>
+            <p>所在群組</p>
+            <p>{{ now_user_group.Name }}</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <p class="title">我的裝置</p>
+        <div class="hr"></div>
+        <div class="blocks">
+            {% for device in devices %}
+                <a class="ctx_block button-ani" href="{% url 'device_edit' device.id %}">
+                    <div class="icon"></div>
+                    <p>{{ device.Name }}</p>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
 {% else %}
     <p>請登入系統以使用服務</p>
     <a href="{% url 'login' %}">

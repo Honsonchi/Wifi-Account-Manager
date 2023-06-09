@@ -1,4 +1,6 @@
+from typing import Any
 from django.core.exceptions import PermissionDenied
+from django.db.models.query import QuerySet
 from django.urls import path, reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
@@ -16,10 +18,20 @@ class HomePage(ListView):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
             context['now_user'] = UserInfo.objects.get(UserData=self.request.user)
+            context['now_user_group'] = Group.objects.get(UserData__UserData=self.request.user)
         else:
             context['now_user'] = ''
+            context['now_user_group'] = ''
         return context
     
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Device.objects.filter(Owner__UserData=self.request.user)
+        return super().get_queryset()
+    
+
+
+    context_object_name = 'devices'
     template_name = 'homepage.html'
 
 # 變更密碼

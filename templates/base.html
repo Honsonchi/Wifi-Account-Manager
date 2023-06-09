@@ -13,22 +13,22 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div class="nav-bar">
+    <div class="navbar">
         <a href="{% url 'homepage' %}">
             <div class="logo">
                 <div></div>
-                <p>無線網路管理系統</p>
+                <p>大直高中無線網路</p>
             </div>
         </a>
+
         <a href="{% url 'homepage' %}">
             <p id="homepage-button">首頁</p>
-            </a>
+        </a>
 
         {% if user.is_authenticated %}
             <a href="{% url 'device_managing' %}">
                 <p>我的裝置</p>
             </a>
-
             {% if perms.main.admin %}
                 <a href="{% url 'manage' %}">
                     <p>裝置管理</p>
@@ -37,24 +37,61 @@
                     <p>群組管理</p>
                 </a>
             {% endif %}
-
-            {{ now_user }}
             <a href="{% url 'logout' %}">
-                <button class="button">登出</button>
+                <p>登出</p>
             </a>
-            <a href="{% url 'password' %}">
-                <p>變更密碼</p>
-            </a>
-
         {% else %}
         <a href="{% url 'login' %}">
-            <button class="button">登入</button>
+            <p>登入</p>
         </a>
         {% endif %}
     </div>
 
-    <hr>
+    <div class="content">
+        <div class="main">
+            {% block body %}{% endblock body %}
+        </div>
+        <div class="side">
+            <div class="container">
+                <p class="title">功能表</p>
+                <div class="function">
+                    <a>
+                        <button class="sqr-button button-ani">
+                            <div class="icon icon-devices"></div>
+                            <p>我的裝置</p>
+                        </button>
+                    </a>
+                    <a>
+                        <button class="sqr-button button-ani">
+                            <div class="icon icon-devices"></div>
+                            <p>我的裝置</p>
+                        </button>
+                    </a>
+                    <a>
+                        <button class="sqr-button button-ani">
+                            <div class="icon icon-devices"></div>
+                            <p>我的裝置</p>
+                        </button>
+                    </a>
+                    <a>
+                        <button class="sqr-button button-ani">
+                            <div class="icon icon-devices"></div>
+                            <p>我的裝置</p>
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <div class="container">
+                <p class="title">聯絡我們</p>
+                <p class="inline-title">資訊組長 - 魏仲良</p>
+                <p class="inline">dcsh313@dcsh.tp.edu.tw</p>
+                <p class="inline">2533-4017#313</p>
+                <p class="inline-title">資訊社</p>
+                <p class="inline">@dzif_24th</p>
+            </div>
+        </div>
+    </div>
 
-    {% block body %}{% endblock body %}
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

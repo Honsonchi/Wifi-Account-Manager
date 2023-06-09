@@ -3,42 +3,40 @@
 {% block title %}登入{% endblock title %}
 
 {% block body %}
-
-<div class="login-form">
-    <form action="" method="post">
-        <div class="login-form-info">
-            <a href="{% url 'homepage' %}">
-                <div class="logo">
-                    <div></div>
-                    <p>無線網路管理系統</p>
-                </div>
+    <form action="" method="post" class="login-form">
+        <div>
+            <a href="{% url 'homepage' %}" class="logo">
+                <div></div>
+                <p>大直高中無線網路</p>
             </a>
-            <p class="login-form-title">登入</p>
     
+            <p class="title">
+                登入
+            </p>
+
             {% csrf_token %}
             {% for message in form.non_field_errors %}
                 {{message}}
             {% endfor %}
-    
-            <div class="large-input">
+
+            <div class="input">
                 <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username">
                 <label>使用者名稱</label>
             </div>
     
-            <div class="large-input">
+            <div class="input">
                 <input type="password" name="password" autocomplete="current-password" required="" id="id_password">
                 <label>密碼</label>
             </div>
     
-            <div class="login-form-submit">
-                <p class="forget">
-                    忘記密碼？<br>
-                    請詢問資訊組組長
-                </p>
-        
-                <input class="large-button button" type="submit" value="登入">
+            <div class="function">
+                <div class="info">
+                    <p>忘記密碼？</p>
+                    <p>請詢問資訊組長</p>
+                </div>
+
+                <input class="primary-button large-button" type="submit" value="登入">
             </div>
         </div>
     </form>
-</div>
 {% endblock body %}

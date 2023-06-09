@@ -1,7 +1,67 @@
-*{
+/* CSS Reset */
+/* ------------------------------ */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* ------------------------------ */
+
+
+/* 全域設定 */
+/* ------------------------------ */
+
+:root *{
     /* 方便觀察用 */
     /* border: 1px black solid; */
+}
 
+*::selection{
+    color: var(--color-white);
+    background-color: var(--color-dcsh-blue-1);
+}
+
+:root{
     --color-dcsh-blue-0: #004786;
     --color-dcsh-blue-1: #005faf;
     --color-dcsh-blue-2: #4f92e8;
@@ -14,112 +74,22 @@
     --radius-3: 8px;
     --radius-4: 4px;
 
-    --shadow-1: 0rem 0rem 2rem rgba(0, 0, 0, 0.16);
-    --shadow-2: 0rem 0rem 0.5rem rgba(0, 0, 0, 0.16);
+    --shadow-1: 0px 0px 24px rgba(0, 0, 0, 0.08);
+    --shadow-2: 0px 0px 8px rgba(0, 0, 0, 0.16);
     
     --font: 'Noto Sans', 'Noto Sans TC', 'sans-serif';
 
     --animation-speed: 100ms;
 }
 
-/* Set default font family and size */
+
 body {
     font-family: var(--font);
-    font-size: 12pt;
+    font-size: 12px;
 }
 
-a{
-    text-decoration: none;
-}
-
-.nav-bar{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: rgb(226, 226, 226); /* 添加背景顏色 */
-    /*color: white;*/ /* 文字顏色為白色 */
-}
-
-.nav-bar > a:last-child{
-    margin-left: auto;
-    text-decoration: none;
-}
-/* Style the header */
-.header {
-    background-color: #f2f2f2;
-    padding: 20px;
-    text-align: center;
-}
-
-.header-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #2a57d1; /*chatgpt好神*/
-}
-
-.header-logo {
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 10px; /* 可根據需要調整圖片和文字之間的間距 */
-    width: 80px;
-}
-
-.header-title {
-    display: inline-block;
-    vertical-align: middle;
-}
-  
-
-#homepage-button{
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    color: rgb(224, 139, 54);
-}
-
-#login-button {
-    margin-left: auto;
-    padding: 5px 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: large;}
-  
-#login-button:hover {
-    background-color: #45a049;
-}
-
-#logout-button {
-    margin-left: auto;
-    padding: 5px 10px;
-    background-color: #b80a18;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: large;}
-  
-#logout-button:hover {
-    background-color: #b80a18;
-}
-
-#device_managing-button {
-    color: rgb(47, 69, 139);
-}
-
-#manage-button {
-    color: #005faf;
-}
-
-#group_managing-button {
-    color: #005faf;
-}
-
-/* ----------------Logo---------------- */
+/* Logo */
+/* ------------------------------ */
 
 .logo{
     align-items: center;
@@ -132,8 +102,8 @@ a{
     background-size: contain;
     background-repeat: no-repeat;
 
-    height: 2.25rem;
-    width: 3.46304413289rem;
+    height: 27.6804px;
+    width: 42.6038px;
 
     display: inline-block;
     vertical-align: middle;
@@ -142,103 +112,158 @@ a{
 .logo > p{
     color: var(--color-dcsh-blue-1);
 
-    font-size: 1.75rem;
+    font-size: 23.15px;
     font-weight: 500;
 
     display: inline;
     vertical-align: middle;
-    padding-left: 1.25rem;
+    padding-left: 18px;
     text-decoration: none;
 }
 
-/* ------------------------------------ */
+/* ------------------------------ */
 
 
-/* ----------------Form---------------- */
+/* Login form */
+/* ------------------------------ */
 
-.large-input{
-    position: relative;
-    margin-left: 1%;
+.login-form{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.large-input input{
+.login-form>div{
+    max-width: 506px;
+
+    border-radius: var(--radius-1);
+    box-shadow: var(--shadow-1);
+    padding-top: 100px;
+    padding-bottom: 100px;
+    padding-left: 60px;
+    padding-right: 60px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form .title{
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 24px;
+
+    margin-top: 45px;
+    margin-bottom: 45px;
+}
+
+.login-form .input ~ .input{
+    margin-top: 17px;
+}
+
+.login-form .info>p{
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.login-form .info>p ~ p{
+    margin-top: 3.6px;
+}
+
+.login-form .function{
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 50px;
+}
+
+/* ------------------------------ */
+
+
+/* Form */
+/* ------------------------------ */
+
+.input{
+    position: relative;
+    width: 388.5px;
+}
+
+.input input{
     background-color: var(--color-white);
     border: var(--color-gray-1) solid 0.25px;
     border-radius: var(--radius-4);
     outline: none;
     
-    font-size: 1.25rem;
-    text-indent: 1.05rem;
+    font-size: 20px;
+    text-indent: 20px;
 
     padding: 0;
     margin: 0;
-    width: 99%;
-    height: 3.375rem;
+    width: 100%;
+    height: 54px;
 }
 
-.large-input label{
-    font-size: 1.25rem;
+.input label{
+    font-size: 20px;
 
     position: absolute;
     left: 0;
-    margin-top: 0.8rem;
-    margin-left: 1.2rem;
+
+    margin-left: 20px;
     
     pointer-events: none;
 
     transition: var(--animation-speed);
+    transform: translateY(-38px);
 }
 
-.large-input input:valid ~ label,
-.large-input input:focus ~ label{
+.input input:valid ~ label,
+.input input:focus ~ label{
     color: var(--color-dcsh-blue-0);
     background-color: var(--color-white);
 
-    font-size: 0.85rem;
+    font-size: 14px;
 
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
-    transform: translateY(-1.4875rem); /* -0.8-font-size/2-0.2625 */
+    padding-left: 5px;
+    padding-right: 5px;
+    transform: translate(-6px, -63px);
 }
 
-.large-input input:valid,
-.large-input input:focus{
+.input input:valid,
+.input input:focus{
     border-color: var(--color-dcsh-blue-0);
 }
 
-.button{
+.primary-button{
     background-color: var(--color-dcsh-blue-1);
     border: none;
     border-radius: var(--radius-4);
     color: var(--color-white);
 
-    font-size: 0.927rem;
+    font-size: 16px;
     font-weight: 700;
     text-align: center;
-    padding-left: 0.8034rem;
-    padding-right: 0.8034rem;
+    padding-left: 10px;
+    padding-right: 10px;
 
-    height: 2.08575rem;
+    height: 32px;
 
     transition: 100ms;
 }
 
-.large-button{
-    font-size: 1.5rem;
-    font-weight: 700;
-    text-align: center;
-    padding-left: 1.3rem;
-    padding-right: 1.3rem;
-
-    height: 3.375rem;
-}
-
-.button:hover{
+.primary-button:hover{
     background-color: var(--color-dcsh-blue-0);
     box-shadow: var(--shadow-2);
 }
 
-.button:active{
+.primary-button:active{
     background-color: var(--color-dcsh-blue-0);
     box-shadow: var(--shadow-2);
 
@@ -246,98 +271,353 @@ a{
     filter: brightness(75%);
 }
 
-/* ------------------------------------ */
-
-
-/* -------------Login Form------------- */
-
-.login-form-title{
-    font-size: 2.25rem;
+.large-button{
+    font-size: 24px;
     font-weight: 700;
-    margin: 0;
+    text-align: center;
+    padding-left: 23px;
+    padding-right: 23px;
+
+    height: 54px;
 }
 
-.login-form{
+/* ------------------------------ */
+
+
+/* Navbar */
+/* ------------------------------ */
+
+.navbar{
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-1);
+
+    width: calc(100% - 160px);
+    height: 65px;
+
+    padding-left: 80px;
+    padding-right: 80px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    height: 100%;
+
+    position: fixed;
+    top: 0;
 }
 
-.login-form form{
+.navbar a{
+    text-decoration: none;
+}
+
+.navbar a ~ a{
+    margin-left: 32px;
+}
+
+.navbar a ~ a p{
+    color: #000000;
+    font-size: 18px;
+}
+
+.navbar a:nth-last-child(2){
+    flex-grow: 1;
+}
+
+/* ------------------------------ */
+
+
+/* Navbar */
+/* ------------------------------ */
+
+.user-info{
+    margin-left: 40px;
+    margin-bottom: 40px;
+
+    display: flex;
+    align-items: center;
+}
+
+.user-info>div>p:nth-child(1){
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.user-info>div>p:nth-child(2){
+    font-size: 22px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.user-info>div:nth-child(2){
+    background-color: var(--color-gray-1);
+
+    height: 76px;
+    width: 5px;
+    border-radius: 2.5px;
+
+    margin-left: 32px;
+    margin-right: 32px;
+}
+
+/* ------------------------------ */
+
+/* Content */
+/* ------------------------------ */
+
+.content{
+    margin-top: 110px;
+
+    display: flex;
+    justify-content: center;
+    flex-flow: wrap;
+}
+
+.content>.main{
+    width: 80%;
+    max-width: 1000px;
+}
+
+.content>.side{
+    width: 25%;
+    max-width: 420px;
+}
+
+.content>.side>.container{
+    margin-left: 40px;
+}
+
+.container{
     background-color: var(--color-white);
     border-radius: var(--radius-1);
     box-shadow: var(--shadow-1);
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    width: 35rem;
-    height: 42.75rem;
+    padding: 30px;
+    margin-top: 40px;
 }
 
-.login-form .login-form-info{
+.container .title{
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.container>.head{
     display: flex;
-    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
+}
+
+.container>.head a{
+    text-decoration: none;
+}
+
+.container>.head>.title{
+    padding-right: 24px;
+}
+
+.container>.inline{
+    font-size: 22px;
+    padding-bottom: 4px;
+}
+
+.container>.inline-title{
+    font-size: 22px;
+    font-weight: 700;
+    padding-top: 16px;
+    padding-bottom: 4px;
+}
+
+.container>.hr{
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-gray-1);
+    border-radius: 0.5px;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.blocks{
+    display: flex;
+    flex-flow: wrap;
     justify-content: space-between;
-
-    width: 25.5rem;
-    height: 25rem;
 }
 
-.login-form .login-form-submit{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    width: 100%;
-}
-
-.login-form .large-input{
-    width: 100%;
-}
-
-/* ------------------------------------ */
-/* ---------------我的裝置------------- */
-/*table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  th, td {
-    border: 1px solid rgb(0, 0, 0);
-    padding: 8px;
-    text-align: left;
-  }*/
-
-
-/*----------------裝置管理---------------- */
-/* Table styles */
-table {
-    width: 100%;
-    border-collapse: collapse;
+.ctx_block{
+    width: 48%;
+    height: 175px;
+    border: 1px solid var(--color-gray-1);
+    border-radius: var(--radius-3);
     
-  }
-  
-  th, td {
-    padding: 10px;
-    text-align: left;
-    border: 2px solid rgba(0, 0, 0, 0.16);
-  }
-  
-  th {
-    background-color: #333;
-    color: white;
-  }
-  
-  tr.odd {
-    background-color: #f2f2f2;
-  }
-  
-  tr.even {
-    background-color: #e6e6e6;
-  }
-  
+    flex-shrink: 0;
+
+    margin: 5px;
+    margin-bottom: 20px;
+    background-color: var(--color-white);
+
+    display: flex;
+    align-items: center;
+}
+
+.ctx_block>p{
+    color: #000000;
+    font-size: 26px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.ctx_block>.icon{
+    height: 60%;
+    aspect-ratio : 1 / 1;
+    background-image: url("/static/img/icon/devices.svg");
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+    padding-left: 40px;
+}
+
+/* ------------------------------ */
+
+.sqr-button{
+    height: 96px;
+    aspect-ratio : 1 / 1;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-1);
+    border-radius: var(--radius-3);
+
+    margin: 5px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.sqr-button .icon{
+    height: 50%;
+    aspect-ratio: 1 / 1;
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.icon-devices{
+    background-image: url("/static/img/icon/devices.svg");
+}
+
+.sqr-button p{
+    font-size: 16.5px;
+    font-weight: 700;
+}
+
+.side>.container .title{
+    margin-bottom: 20px;
+}
+
+.side .function{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: space-around;
+}
+
+.button-ani{
+    transition: var(--animation-speed);
+}
+
+.button-ani:hover{
+    filter: brightness(95%);
+}
+
+.button-ani:active{
+    filter: brightness(75%);
+    transform: scale(90%);
+}
+
+.button-ani{
+    text-decoration: none;
+}
+
+.rect-button{
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-1);
+    border-radius: var(--radius-3);
+
+    padding: 12px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rect-button .icon{
+    height: 25px;
+    width: 25px;
+    background-image: url("/static/img/icon/add.svg");
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.rect-button p{
+    font-size: 18px;
+    font-weight: 700;
+    padding-left: 3px;
+}
+
+/* ------------------------------ */
+
+.big-blocks{
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+}
+
+.big_ctx_block{
+    width: 100%;
+    height: 175px;
+    border: 1px solid var(--color-gray-1);
+    border-radius: var(--radius-3);
+    
+    flex-shrink: 0;
+
+    margin: 5px;
+    margin-bottom: 20px;
+    background-color: var(--color-white);
+
+    display: flex;
+    align-items: center;
+}
+
+.big_ctx_block .head p{
+    color: #000000;
+    font-size: 24px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.big_ctx_block .head p:nth-child(1){
+    font-size: 32px;
+    font-weight: 700;
+    padding-bottom: 16px;
+}
+
+.big_ctx_block .head{
+    flex-grow: 1;
+}
+
+.big_ctx_block>.icon{
+    height: 60%;
+    aspect-ratio : 1 / 1;
+    background-image: url("/static/img/icon/devices.svg");
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+    padding-left: 40px;
+}
+
+.big_ctx_block a{
+    text-decoration: none;
+}
+
+.big_ctx_block a:last-child{
+    padding-right: 20px;
+}
