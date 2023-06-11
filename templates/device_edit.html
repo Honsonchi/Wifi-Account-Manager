@@ -2,29 +2,57 @@
 
 {% block title %}
     {% if device.Owner == now_user or now_user.UserType == 0 %}
-        {% if device.Owner.UserType == 2 %}
-            {{ device.Owner.Grade }}{{ device.Owner.Class|stringformat:"02i" }}{{ device.Owner.SeatNumber|stringformat:"02i" }} {{ device.Owner.Name }} 的 {{ device.Name }}
-        {% elif device.Owner.UserType == 1 %}
-            老師 {{ device.Owner.Name }} 的 {{ device.Name }}
-        {% else %}
-            管理員 {{ device.Owner.Name }} 的 {{ device.Name }}
-        {% endif %}
+        編輯裝置
     {% else %}
         沒有權限
     {% endif %}
 {% endblock title %}
 
 {% block body %}
-    {% if device.Owner == now_user or now_user.UserType == 0 %}
-        <p>{% if device.Owner.UserType == 2 %}{{ device.Owner.Grade }}{{ device.Owner.Class|stringformat:"02i" }}{{ device.Owner.SeatNumber|stringformat:"02i" }} {{ device.Owner.Name }} 的 {{ device.Name }}{% elif device.Owner.UserType == 1 %}老師 {{ device.Owner.Name }} 的 {{ device.Name }}{% else %}管理員 {{ device.Owner.Name }} 的 {{ device.Name }}{% endif %}</p>
+    <div class="container">
+        {% if device.Owner == now_user or now_user.UserType == 0 %}
 
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="確定">
-            <input type="button" value="返回" onclick="javascript:window.history.back();">
-        </form>
-    {% else %}
-        <p>您無法更改他人的裝置</p>
-    {% endif %}
+            <div class="title">
+                <div class="icon icon-devices"></div>
+                <p>{{ device.Name }}</p>
+                <a href="{% url 'device_delete' device.id %}">
+                    <button class="sqr-button button-ani r20px">
+                        <div class="icon icon-delete"></div>
+                        <p>刪除裝置</p>
+                    </button>
+                </a>
+            </div>
+
+            <div class="hr"></div>
+
+            <form action="" method="post" class="form">
+                {% csrf_token %}
+
+                {% for field in form %}
+                    <div class="field">
+                        <p>{{ field.label }}</p>
+                        <div>
+                            {{ field }}
+                            {% if field.errors %}
+                                <p>{{ field.errors }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+                
+                <div class="function">
+                    <input class="primary-button large-button button-ani" type="submit" value="確定">
+                    <input class="primary-button large-button white-button button-ani" type="button" value="返回" onclick="javascript:window.history.back();">
+                </div>
+            </form>
+        {% else %}
+            <p class="title">您無法更改他人的裝置</p>
+            <div class="hr"></div>
+            <div class="function">
+                <button class="primary-button large-button white-button button-ani" onclick="javascript:window.history.back();">
+                    返回
+                </button>
+            </div>
+        {% endif %}
+    </div>
 {% endblock body %}

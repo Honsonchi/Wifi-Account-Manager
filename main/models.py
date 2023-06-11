@@ -56,12 +56,12 @@ class UserInfo(models.Model):
         else:
             return f'{self.Grade}{self.Class:02d}{self.SeatNumber:02d} {self.Name}'
 
-# 載具
+# 裝置
 class Device(models.Model):
-    # 載具名稱
-    Name = models.CharField('載具名稱', max_length=100)
+    # 裝置名稱
+    Name = models.CharField('裝置名稱', max_length=100)
 
-    # 載具從屬人
+    # 裝置從屬人
     Owner = models.ForeignKey(UserInfo, verbose_name="擁有人", on_delete=models.CASCADE)
 
     # MAC位址

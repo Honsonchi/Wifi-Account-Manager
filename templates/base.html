@@ -38,6 +38,7 @@
                 </a>
             {% endif %}
             <div class="nav-spacer"></div>
+            <p>{{ now_user }}</p>
             <a href="{% url 'logout' %}">
                 <p>登出</p>
             </a>
@@ -57,24 +58,53 @@
             <div class="container">
                 <p class="title">功能表</p>
                 <div class="function">
-                    <a>
-                        <button class="sqr-button button-ani">
-                            <div class="icon icon-devices"></div>
-                            <p>我的裝置</p>
-                        </button>
-                    </a>
-                    <a>
-                        <button class="sqr-button button-ani">
-                            <div class="icon icon-devices"></div>
-                            <p>我的裝置</p>
-                        </button>
-                    </a>
-                    <a>
-                        <button class="sqr-button button-ani">
-                            <div class="icon icon-devices"></div>
-                            <p>我的裝置</p>
-                        </button>
-                    </a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'device_managing' %}">
+                            <button class="sqr-button button-ani">
+                                <div class="icon icon-devices"></div>
+                                <p>我的裝置</p>
+                            </button>
+                        </a>
+                        {% if perms.main.admin %}
+                            <a href="{% url 'manage' %}">
+                                <button class="sqr-button button-ani">
+                                    <div class="icon icon-folder_managed"></div>
+                                    <p>裝置管理</p>
+                                </button>
+                            </a>
+                            <a href="{% url 'group_managing' %}">
+                                <button class="sqr-button button-ani">
+                                    <div class="icon icon-group"></div>
+                                    <p>群組管理</p>
+                                </button>
+                            </a>
+                            <a href="{% url 'admin:index' %}">
+                                <button class="sqr-button button-ani">
+                                    <div class="icon icon-developer_mode"></div>
+                                    <p>後台</p>
+                                </button>
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'password' %}">
+                            <button class="sqr-button button-ani">
+                                <div class="icon icon-password"></div>
+                                <p>變更密碼</p>
+                            </button>
+                        </a>
+                        <a href="{% url 'logout' %}">
+                            <button class="sqr-button button-ani">
+                                <div class="icon icon-logout"></div>
+                                <p>登出</p>
+                            </button>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}">
+                            <button class="sqr-button button-ani">
+                                <div class="icon icon-login"></div>
+                                <p>登入</p>
+                            </button>
+                        </a>
+                    {% endif %}
                 </div>
             </div>
             <div class="container">

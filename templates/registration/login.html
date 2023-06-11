@@ -15,9 +15,6 @@
             </p>
 
             {% csrf_token %}
-            {% for message in form.non_field_errors %}
-                {{message}}
-            {% endfor %}
 
             <div class="input">
                 <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username">
@@ -29,13 +26,21 @@
                 <label>密碼</label>
             </div>
     
+            {% if form.non_field_errors %}
+                <div class="login-form-error">
+                    {% for message in form.non_field_errors %}
+                        <p>{{message}}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             <div class="function">
                 <div class="info">
                     <p>忘記密碼？</p>
                     <p>請詢問資訊組長</p>
                 </div>
 
-                <input class="primary-button large-button" type="submit" value="登入">
+                <input class="primary-button large-button button-ani" type="submit" value="登入">
             </div>
         </div>
     </form>
