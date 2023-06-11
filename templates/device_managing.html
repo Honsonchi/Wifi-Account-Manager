@@ -9,8 +9,8 @@
         <p class="title">我的裝置</p>
         <a href="{% url 'device_create' %}">
             <button class="rect-button button-ani">
-                <div class="icon"></div>
-                <p>我的裝置</p>
+                <div class="icon icon-add"></div>
+                <p>新增裝置</p>
             </button>
         </a>
     </div>
@@ -18,20 +18,20 @@
     <div class="big-blocks">
         {% for device in devices %}
             <div class="big_ctx_block">
-                <div class="icon"></div>
+                <div class="icon icon-devices"></div>
                 <div class="head">
                     <p>{{ device.Name }}</p>
                     <p>{{ device.MacAddress|slice:"0:2" }}:{{ device.MacAddress|slice:"2:4" }}:{{ device.MacAddress|slice:"4:6" }}:{{ device.MacAddress|slice:"6:8" }}:{{ device.MacAddress|slice:"8:10" }}:{{ device.MacAddress|slice:"10:12" }}</p>
                 </div>
                 <a href="{% url 'device_edit' device.id %}">
                     <button class="sqr-button button-ani">
-                        <div class="icon icon-devices"></div>
+                        <div class="icon icon-edit"></div>
                         <p>編輯裝置</p>
                     </button>
                 </a>
                 <a href="{% url 'device_delete' device.id %}">
                     <button class="sqr-button button-ani">
-                        <div class="icon icon-devices"></div>
+                        <div class="icon icon-delete"></div>
                         <p>刪除裝置</p>
                     </button>
                 </a>

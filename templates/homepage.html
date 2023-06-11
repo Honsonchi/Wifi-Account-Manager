@@ -31,7 +31,7 @@
         <div class="blocks">
             {% for device in devices %}
                 <a class="ctx_block button-ani" href="{% url 'device_edit' device.id %}">
-                    <div class="icon"></div>
+                    <div class="icon icon-devices"></div>
                     <p>{{ device.Name }}</p>
                 </a>
             {% endfor %}

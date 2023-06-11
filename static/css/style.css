@@ -316,7 +316,7 @@ body {
     font-size: 18px;
 }
 
-.navbar a:nth-last-child(2){
+.navbar .nav-spacer{
     flex-grow: 1;
 }
 
@@ -362,7 +362,7 @@ body {
 /* ------------------------------ */
 
 .content{
-    margin-top: 110px;
+    margin-top: 150px;
 
     display: flex;
     justify-content: center;
@@ -376,7 +376,7 @@ body {
 
 .content>.side{
     width: 25%;
-    max-width: 420px;
+    max-width: 418px;
 }
 
 .content>.side>.container{
@@ -389,7 +389,7 @@ body {
     box-shadow: var(--shadow-1);
 
     padding: 30px;
-    margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 .container .title{
@@ -453,6 +453,7 @@ body {
 
     display: flex;
     align-items: center;
+    flex-grow: 1;
 }
 
 .ctx_block>p{
@@ -465,7 +466,6 @@ body {
 .ctx_block>.icon{
     height: 60%;
     aspect-ratio : 1 / 1;
-    background-image: url("/static/img/icon/devices.svg");
     background-position: center center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -502,6 +502,18 @@ body {
     background-image: url("/static/img/icon/devices.svg");
 }
 
+.icon-add{
+    background-image: url("/static/img/icon/add.svg");
+}
+
+.icon-delete{
+    background-image: url("/static/img/icon/delete.svg");
+}
+
+.icon-edit{
+    background-image: url("/static/img/icon/edit.svg");
+}
+
 .sqr-button p{
     font-size: 16.5px;
     font-weight: 700;
@@ -515,7 +527,6 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    align-items: space-around;
 }
 
 .button-ani{
@@ -550,7 +561,6 @@ body {
 .rect-button .icon{
     height: 25px;
     width: 25px;
-    background-image: url("/static/img/icon/add.svg");
     background-position: center center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -606,7 +616,6 @@ body {
 .big_ctx_block>.icon{
     height: 60%;
     aspect-ratio : 1 / 1;
-    background-image: url("/static/img/icon/devices.svg");
     background-position: center center;
     background-size: contain;
     background-repeat: no-repeat;
