@@ -38,6 +38,11 @@
             </div>
         {% endfor %}
     </div>
+    {% if devices|length == 0 %}
+    <p class="inline">
+        您還沒有裝置，新增裝置吧！
+    </p>
+{% endif %}
 </div>
 
 

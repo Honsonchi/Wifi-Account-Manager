@@ -78,17 +78,6 @@ class Device(models.Model):
         else:
             return f'{self.MacAddress} | {self.Owner.Grade}{self.Owner.Class:02d}{self.Owner.SeatNumber:02d} {self.Owner.Name} 的 {self.Name}'
 
-# 群組標籤
-class Tag(models.Model):
-    # 標籤名稱
-    Name = models.CharField('標籤名稱', max_length=100)
-
-    # 備註
-    Note = models.TextField('備註', blank=True, null=True)
-
-    def __str__(self):
-        return f'{self.Name}'
-
 # 群組
 class Group(models.Model):
     # 群組名稱
@@ -96,9 +85,6 @@ class Group(models.Model):
 
     # 身分
     UserData = models.ManyToManyField(UserInfo, verbose_name="身分")
-
-    # Tag
-    Tag = models.ManyToManyField(Tag, verbose_name="標籤")
 
     # 備註
     Note = models.TextField('備註', blank=True, null=True)

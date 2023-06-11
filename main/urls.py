@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import HomePage, PasswordChange, DeviceManaging, DeviceEdit, DeviceDelete, DeviceCreate, GroupManaging, GroupEdit, GroupDelete, GroupCreate, Manage, AdminDeviceEdit, AdminDeviceDelete
+from .views import HomePage, PasswordChange, DeviceManaging, DeviceEdit, DeviceDelete, DeviceCreate, GroupManaging, GroupEdit, GroupDelete, GroupCreate, Manage, AdminDeviceEdit, AdminDeviceDelete, AdminDeviceCreate
 
 urlpatterns = [
     # 首頁路徑
@@ -24,4 +24,5 @@ urlpatterns = [
     path('manage/', Manage.as_view(), name='manage'),
     path('manage/edit/<int:deviceid>/', AdminDeviceEdit.as_view(), name='admin_device_edit'),
     path('manage/delete/<int:deviceid>/', AdminDeviceDelete.as_view(), name='admin_device_delete'),
+    path('manage/create/', AdminDeviceCreate.as_view(), name='admin_device_create'),
 ]

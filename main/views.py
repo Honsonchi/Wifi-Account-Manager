@@ -256,7 +256,7 @@ class AdminDeviceEdit(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     permission_required = ['main.can_assess', 'main.admin']
     
     def get_success_url(self):
-        return reverse_lazy('admin_device_managing')
+        return reverse_lazy('manage')
 
     def form_valid(self, form):
         now_user = UserInfo.objects.get(UserData=self.request.user)
@@ -307,3 +307,24 @@ class AdminDeviceDelete(PermissionRequiredMixin, LoginRequiredMixin, DeleteView)
     pk_url_kwarg = 'deviceid'
     context_object_name = 'device'
     template_name = 'admin_device_delete.html'
+
+# 管理員裝置新增
+class AdminDeviceCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
+    model = Device
+    form_class = AdminDeviceForm
+    permission_required = ['main.can_assess', 'main.admin']
+
+    def get_success_url(self):
+        return reverse_lazy('manage')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['now_user'] = UserInfo.objects.get(UserData=self.request.user)
+        else:
+            context['now_user'] = ''
+        return context
+
+    pk_url_kwarg = 'deviceid'
+    context_object_name = 'device'
+    template_name = 'admin_device_create.html'

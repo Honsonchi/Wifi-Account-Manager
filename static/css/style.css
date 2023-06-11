@@ -520,11 +520,19 @@ a{
 }
 
 .container>.inline{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
     font-size: 22px;
     padding-bottom: 4px;
 }
 
 .container>.inline-title{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
     font-size: 22px;
     font-weight: 700;
     padding-top: 16px;

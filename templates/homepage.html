@@ -36,6 +36,18 @@
                 </a>
             {% endfor %}
         </div>
+        {% if devices|length == 0 %}
+            <p class="inline">
+                您還沒有裝置，
+                <a href="{% url 'device_create' %}">
+                    <button class="rect-button button-ani">
+                        <div class="icon icon-add"></div>
+                        <p>新增裝置</p>
+                    </button>
+                </a>
+                吧！
+            </p>
+        {% endif %}
     </div>
 
 {% else %}
