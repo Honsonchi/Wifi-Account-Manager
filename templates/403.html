@@ -1,15 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'base_error.html' %}
 
 {% block title %}沒有權限{% endblock title %}
 
 {% block body %}
 
-<p>403 Forbidden</p>
-<p>403 禁止：拒絕存取</p>
+<div class="icon icon-do_not_disturb"></div>
 
-<p>您沒有權限瀏覽這個頁面！</p>
+<p class="big-title"><span class="bold">403</span> Forbidden</p>
 
-<p>若這個錯誤持續發生，請通知資訊組</p>
-
-<button onclick="javascript:window.history.back();">回上一頁</button>
 {% endblock body %}

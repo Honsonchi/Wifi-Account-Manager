@@ -1,15 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'base_error.html' %}
 
 {% block title %}伺服器錯誤{% endblock title %}
 
 {% block body %}
 
-<p>500 Internal Server Error</p>
-<p>500 伺服器錯誤</p>
+<div class="icon icon-dns"></div>
 
-<p>伺服器錯誤，請重試您的動作</p>
+<p class="big-title"><span class="bold">500</span> Internal Server Error</p>
 
-<p>若這個錯誤持續發生，請通知資訊組</p>
-
-<button onclick="javascript:window.history.back();">回上一頁</button>
 {% endblock body %}

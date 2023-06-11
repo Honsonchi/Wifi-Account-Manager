@@ -1,12 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'base_error.html' %}
 
 {% block title %}沒有權限{% endblock title %}
 
 {% block body %}
 
-<p>403 Forbidden</P>
-<p>403 禁止：拒絕存取</P>
+<div class="icon icon-signature"></div>
 
-<p>驗證失敗！</P>
+<p class="big-title"><span class="bold">403</span> CSRF Error</p>
 
 {% endblock body %}

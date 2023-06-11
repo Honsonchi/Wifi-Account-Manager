@@ -1,15 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'base_error.html' %}
 
 {% block title %}請求錯誤{% endblock title %}
 
 {% block body %}
 
-<p>400 Bad Request</p>
-<p>400 請求錯誤</p>
+<div class="icon icon-error"></div>
 
-<p>請求錯誤！</p>
+<p class="big-title"><span class="bold">400</span> Bad Request</p>
 
-<p>若這個錯誤持續發生，請通知資訊組</p>
-
-<button onclick="javascript:window.history.back();">回上一頁</button>
 {% endblock body %}
