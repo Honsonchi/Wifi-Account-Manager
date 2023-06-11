@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+刪除裝置
+{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <div class="title">
+            <p>刪除裝置</p>
+        </div>
+
+        <div class="hr"></div>
+        
+        <p class="inline">確定刪除以下裝置嗎？</p>
+
+        <div class="spacer"></div>
+
+        <div class="big_ctx_block">
+            <div class="icon icon-devices"></div>
+            <div class="head-info">
+                <p>{% if device.Owner.UserType == 2 %}學生 - {{ device.Owner.Grade }}{{ device.Owner.Class|stringformat:"02i" }}{{ device.Owner.SeatNumber|stringformat:"02i" }} {{ device.Owner.Name }}{% elif device.Owner.UserType == 1 %}教師 - {{ device.Owner.Name }}{% else %}管理員 - {{ device.Owner.Name }}{% endif %}</p>
+                <p>{{ device.Name }}</p>
+                <p>{{ device.MacAddress|slice:"0:2" }}:{{ device.MacAddress|slice:"2:4" }}:{{ device.MacAddress|slice:"4:6" }}:{{ device.MacAddress|slice:"6:8" }}:{{ device.MacAddress|slice:"8:10" }}:{{ device.MacAddress|slice:"10:12" }}</p>
+            </div>
+        </div>
+
+        <form action="" method="post" class="form">
+            {% csrf_token %}
+
+            <div class="function">
+                <input class="primary-button large-button warring-button button-ani" type="submit" value="刪除">
+                <input class="primary-button large-button white-button button-ani" type="button" value="返回" onclick="javascript:window.history.back();">
+            </div>
+        </form>
+    </div>
+{% endblock body %}

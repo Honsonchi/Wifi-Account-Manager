@@ -17,3 +17,18 @@ class DeviceForm(forms.ModelForm):
             raise forms.ValidationError('MAC位址格式有誤')
 
         return mac_address.upper()
+    
+class AdminDeviceForm(forms.ModelForm):
+    class Meta:
+        model = Device
+        fields = ('Owner', 'Name', 'MacAddress', 'Note')
+
+    def clean_MacAddress(self, *args, **kwargs):
+        mac_address = self.cleaned_data.get('MacAddress')
+        
+        pattern = re.compile(r'[0-9a-fA-F]{12}')
+
+        if not pattern.match(mac_address):
+            raise forms.ValidationError('MAC位址格式有誤')
+
+        return mac_address.upper()

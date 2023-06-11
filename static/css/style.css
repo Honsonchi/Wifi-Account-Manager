@@ -325,7 +325,7 @@ a{
 
 .form .field div>input{
     height: 50px;
-    width: calc(100% - 8.5px);
+    width: calc(100% - 7px);
 
     border: 1px solid var(--color-gray-1);
     border-radius: var(--radius-3);
@@ -335,7 +335,7 @@ a{
 }
 
 .form .field div>textarea{
-    width: calc(100% - 4px - 13.25px - 13.25px);
+    width: calc(100% - 3px - 13.25px - 13.25px);
 
     border: 1px solid var(--color-gray-1);
     border-radius: var(--radius-3);
@@ -359,6 +359,16 @@ a{
 
 .form .function input ~ input{
     margin-left: 20px;
+}
+
+.form select{
+    width: calc(100% - 1px);
+
+    border: 1px solid var(--color-gray-1);
+    border-radius: var(--radius-3);
+
+    font-size: 16px;
+    padding: 13.25px;
 }
 
 /* ------------------------------ */
@@ -724,7 +734,7 @@ a{
     
     flex-shrink: 0;
 
-    margin: 5px;
+    margin-top: 5px;
     margin-bottom: 20px;
     background-color: var(--color-white);
 
@@ -736,6 +746,16 @@ a{
     color: #000000;
     font-size: 24px;
     font-weight: 500;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.big_ctx_block .head-info p{
+    color: #000000;
+    font-size: 24px;
+    font-weight: 500;
+    padding-top: 4px;
+    padding-bottom: 4px;
     padding-left: 20px;
     padding-right: 20px;
 }
@@ -793,4 +813,198 @@ a{
     width: 215px;
     height: 87.5px;
     margin-top: 27.5px;
+}
+
+
+.container>.spacer{
+    height:16px;
+}
+.container>table{
+    width: 100%;
+}
+
+.container>table th{
+    font-size: 24px;
+    font-weight: 700;
+    text-align: left;
+    
+    border-bottom: 1px solid var(--color-gray-1);
+
+    padding: 10px 5px 10px 5px;
+}
+
+.container>table a{
+    color: #000000;
+}
+
+.container>table td{
+    font-size: 18px;
+    padding: 10px 5px 10px 5px;
+}
+
+.container>table tr{
+    background-color: var(--color-white);
+}
+
+.container>table tr:hover{
+    filter: brightness(95%);
+}
+
+.container>table th{
+    background-color: var(--color-white);
+}
+
+.container>table th:hover{
+    filter: brightness(95%);
+}
+
+.container>table td{
+    background-color: var(--color-white);
+}
+
+.container>table td:hover{
+    filter: brightness(95%);
+}
+
+.container>table .function{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.container>table .function a:last-child{
+    padding-left: 10px;
+}
+
+.container>table .function p{
+    color: var(--color-dcsh-blue-1);
+    text-decoration: underline;
+}
+
+
+
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.pagination .page{
+    height: 26px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-top: 1px solid var(--color-gray-1);
+    border-bottom: 1px solid var(--color-gray-1);
+
+    background-color: var(--color-white);
+
+    transition: var(--animation-speed);
+}
+
+.pagination .now{
+    background-color: var(--color-dcsh-blue-3);
+    height: 42px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid var(--color-gray-1)!important;
+    border-radius: var(--radius-3)!important;
+}
+
+.pagination .page:nth-child(3){
+    border-left: 1px solid var(--color-gray-1);
+    border-top: 1px solid var(--color-gray-1);
+    border-bottom: 1px solid var(--color-gray-1);
+    border-radius: var(--radius-3) 0px 0px var(--radius-3);
+
+    margin-left: 15px;
+}
+
+.pagination .page:nth-last-child(3){
+    border-right: 1px solid var(--color-gray-1);
+    border-top: 1px solid var(--color-gray-1);
+    border-bottom: 1px solid var(--color-gray-1);
+    border-radius: 0px var(--radius-3) var(--radius-3) 0px;
+
+    margin-right: 15px;
+}
+
+.pagination .page p:not(.movement){
+    font-size: 14px;
+    font-weight: 500;
+    color: #000000;
+}
+
+.pagination .page:hover{
+    filter: brightness(95%);
+}
+
+.pagination .page:active{
+    filter: brightness(75%);
+}
+
+.pagination .now p{
+    font-size: 20px;
+}
+
+.pagination .control p{
+    font-size: 14px;
+}
+
+.pagination .control{
+    height: 26px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #000000;
+    background-color: var(--color-white);
+
+    transition: var(--animation-speed);
+}
+
+.pagination .control:hover{
+    filter: brightness(95%);
+}
+
+.pagination .control:active{
+    filter: brightness(75%);
+}
+
+.pagination .control:nth-child(1),
+.pagination .control:nth-last-child(2){
+    border: 1px solid var(--color-gray-1);
+    border-radius: var(--radius-3) 0px 0px var(--radius-3);
+}
+
+.pagination .control:nth-child(2),
+.pagination .control:nth-last-child(1){
+    border: 1px solid var(--color-gray-1);
+    border-left: none;
+    border-radius: 0px var(--radius-3) var(--radius-3) 0px;
+}
+
+.pagination .disable{
+    filter: brightness(95%);
+    opacity: 50%;
+}
+
+.pagination .disable:hover{
+    filter: brightness(95%);
+    opacity: 50%;
+}
+
+.pagination .disable:active{
+    filter: brightness(95%);
+    opacity: 50%;
 }
