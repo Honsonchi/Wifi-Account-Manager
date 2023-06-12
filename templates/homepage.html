@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 
-{% load static %}
-
-{% block title %}大直高中無線網路{% endblock title %}
+{% block title %}首頁{% endblock title %}
 
 {% block body %}
 
@@ -18,10 +16,15 @@
             <p>{{ now_user }}</p>
             <p>{{ now_user.Email }}</p>
         </div>
-        <div></div>
+        <div class="spacer"></div>
         <div>
             <p>所在群組</p>
             <p>{{ now_user_group.Name }}</p>
+        </div>
+        <div class="spacer"></div>
+        <div>
+            <p>可否上網</p>
+            <p>{% if now_user.Internet %}可{% else %}否{% endif %}</p>
         </div>
     </div>
     

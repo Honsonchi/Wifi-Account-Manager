@@ -335,3 +335,22 @@ class AdminDeviceCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView)
     pk_url_kwarg = 'deviceid'
     context_object_name = 'device'
     template_name = 'admin_device_create.html'
+
+#管理員人員管理
+class MemberManaging(PermissionRequiredMixin, LoginRequiredMixin, ListView):
+    model = UserInfo
+    paginate_by=20
+    permission_required = ['main.can_assess', 'main.admin']
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['now_user'] = UserInfo.objects.get(UserData=self.request.user)
+        else:
+            context['now_user'] = ''
+        context['Group'] = Group.objects.all()
+        context['Device'] = Device.objects.all()
+        return context
+    
+    context_object_name = 'members'
+    template_name = 'member_managing.html'

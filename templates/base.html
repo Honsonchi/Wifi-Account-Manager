@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title%}{% endblock title %} </title>
+    <title>{% block title%}{% endblock title %} | 大直高中無線網路</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Noto+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -38,14 +38,19 @@
                     </li>
                 </a>
                 {% if perms.main.admin %}
-                    <a href="{% url 'manage' %}" class="nav-ani">
-                        <li>
-                            <p>裝置管理</p>
-                        </li>
-                    </a>
                     <a href="{% url 'group_managing' %}" class="nav-ani">
                         <li>
                             <p>群組管理</p>
+                        </li>
+                    </a>
+                    <a href="{% url 'member_managing' %}" class="nav-ani">
+                        <li>
+                            <p>人員管理</p>
+                        </li>
+                    </a>
+                    <a href="{% url 'manage' %}" class="nav-ani">
+                        <li>
+                            <p>裝置管理</p>
                         </li>
                     </a>
                 {% endif %}
@@ -92,16 +97,22 @@
                             </button>
                         </a>
                         {% if perms.main.admin %}
-                            <a href="{% url 'manage' %}">
-                                <button class="sqr-button button-ani">
-                                    <div class="icon icon-folder_managed"></div>
-                                    <p>裝置管理</p>
-                                </button>
-                            </a>
                             <a href="{% url 'group_managing' %}">
                                 <button class="sqr-button button-ani">
                                     <div class="icon icon-group"></div>
                                     <p>群組管理</p>
+                                </button>
+                            </a>
+                            <a href="{% url 'member_managing' %}">
+                                <button class="sqr-button button-ani">
+                                    <div class="icon icon-contact_page"></div>
+                                    <p>人員管理</p>
+                                </button>
+                            </a>
+                            <a href="{% url 'manage' %}">
+                                <button class="sqr-button button-ani">
+                                    <div class="icon icon-folder_managed"></div>
+                                    <p>裝置管理</p>
                                 </button>
                             </a>
                             <a href="{% url 'admin:index' %}">

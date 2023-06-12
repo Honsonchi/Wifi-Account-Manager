@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% load get_userdata %}
+{% load get_device_count %}
+
+{% block title %}人員管理{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <div class="head">
+        <p class="title">人員管理</p>
+        <a href="">
+            <button class="rect-button button-ani">
+                <div class="icon icon-add"></div>
+                <p>新增人員</p>
+            </button>
+        </a>
+    </div>
+    <div class="hr"></div>
+    <table>
+        <tr>
+            <th>身分</th>
+            <th>姓名</th>
+            <th>班級座號</th>
+            <th>所在群組</th>
+            <th>裝置數</th>
+            <th>可否上網</th>
+            <th>操作</th>
+        </tr>
+        
+        {% for member in members %}
+            <tr>
+                <td>
+                    {% if member.UserType == 2 %}
+                        學生
+                    {% elif member.UserType == 1 %}
+                        老師
+                    {% else %}
+                        管理員
+                    {% endif %}
+                </td>
+                <td>
+                    {{ member.Name }}
+                </td>
+                <td>
+                    {% if member.UserType == 2 %}
+                        {{ member.Grade }}{{ member.Class|stringformat:"02i" }}{{ member.SeatNumber|stringformat:"02i" }}
+                    {% endif %}
+                </td>
+                <td>
+                    {{ Group|get_userdata:member }}
+                </td>
+                <td>
+                    {{ Device|get_device_count:member }}
+                </td>
+                <td>
+                    {{ member.Internet }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a class="control" href="?page=1">
+                <p>&laquo; 第一頁</p>
+            </a>
+            <a class="control" href="?page={{ page_obj.previous_page_number }}">
+                <p>&lt; 前一頁</p>
+            </a>
+        {% else %}
+            <div class="control disable">
+                <p>&laquo; 第一頁</p>
+            </div>
+            <div class="control disable">
+                <p>&lt; 前一頁</p>
+            </div>
+        {% endif %}
+        {% if 0 < page_obj.number|add:"-2"%}
+            {% if page_obj.number|add:"3" <= page_obj.paginator.num_pages %}
+                {% for page_cnt in page_obj.paginator %}
+                    {% if page_obj.number|add:"-2" <= forloop.counter and forloop.counter < page_obj.number|add:"3" %}
+                        {% if page_obj.number == forloop.counter %}
+                            <a class="page now" href="?page={{forloop.counter}}">
+                                <p>{{ forloop.counter }}</p>
+                            </a>
+                        {% else %}
+                            <a class="page" href="?page={{forloop.counter}}">
+                                <p>{{ forloop.counter }}</p>
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {% for page_cnt in page_obj.paginator %}
+                    {% if page_obj.paginator.num_pages|add:"-5" < forloop.counter and forloop.counter <= page_obj.paginator.num_pages %}
+                        {% if page_obj.number == forloop.counter %}
+                            <a class="page now" href="?page={{forloop.counter}}">
+                                <p>{{ forloop.counter }}</p>
+                            </a>
+                        {% else %}
+                            <a class="page" href="?page={{forloop.counter}}">
+                                <p>{{ forloop.counter }}</p>
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% else %}
+            {% for page_cnt in page_obj.paginator %}
+                {% if forloop.counter <= 5 %}
+                    {% if page_obj.number == forloop.counter %}
+                        <a class="page now" href="?page={{forloop.counter}}">
+                            <p>{{ forloop.counter }}</p>
+                        </a>
+                    {% else %}
+                        <a class="page" href="?page={{forloop.counter}}">
+                            <p>{{ forloop.counter }}</p>
+                        </a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if page_obj.has_next %}
+            <a class="control" href="?page={{ page_obj.next_page_number }}">
+                <p>下一頁 &gt;</p>
+            </a>
+            <a class="control" href="?page={{ page_obj.paginator.num_pages }}">
+                <p>最後一頁 &raquo;</p>
+            </a>
+        {% else %}
+            <div class="control disable">
+                <p>下一頁 &gt;</p>
+            </div>
+            <div class="control disable">
+                <p>最後一頁 &raquo;</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock body %}

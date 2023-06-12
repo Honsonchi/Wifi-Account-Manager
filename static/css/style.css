@@ -530,7 +530,7 @@ a{
     margin-top: 20px;
 }
 
-.user-info>div:nth-child(2){
+.user-info>div.spacer{
     background-color: var(--color-gray-1);
 
     height: 76px;
@@ -767,6 +767,10 @@ a{
 
 .icon-developer_mode{
     background-image: url("/static/img/icon/developer_mode.svg");
+}
+
+.icon-contact_page{
+    background-image: url("/static/img/icon/contact_page.svg");
 }
 
 .sqr-button p{

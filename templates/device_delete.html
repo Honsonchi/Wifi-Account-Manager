@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title %}
-刪除裝置
+    {% if device.Owner == now_user or now_user.UserType == 0 %}
+        刪除裝置
+    {% else %}
+        沒有權限
+    {% endif %}
 {% endblock title %}
 
 {% block body %}
