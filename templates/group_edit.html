@@ -6,13 +6,39 @@
 
 {% block body %}
 
-{{ group.Name }}
+<div class="container">
+        <div class="title">
+            <div class="icon icon-group"></div>
+            <p>{{ group.Name }}</p>
+            <a href="{% url 'group_delete' group.id %}">
+                <button class="sqr-button button-ani r20px">
+                    <div class="icon icon-delete"></div>
+                    <p>刪除群組</p>
+                </button>
+            </a>
+        </div>
 
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="確定">
-    <input type="button" value="返回" onclick="javascript:window.history.back();">
-</form>
+        <div class="hr"></div>
 
+        <form action="" method="post" class="form">
+            {% csrf_token %}
+
+            {% for field in form %}
+                <div class="field">
+                    <p>{{ field.label }}</p>
+                    <div>
+                        {{ field }}
+                        {% if field.errors %}
+                            <p>{{ field.errors }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            
+            <div class="function">
+                <input class="primary-button large-button button-ani" type="submit" value="確定">
+                <input class="primary-button large-button white-button button-ani" type="button" value="返回" onclick="javascript:window.history.back();">
+            </div>
+        </form>
+</div>
 {% endblock body %}

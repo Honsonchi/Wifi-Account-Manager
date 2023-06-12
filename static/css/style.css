@@ -92,6 +92,7 @@ body {
 
 a{
     text-decoration: none;
+    color: #000000;
     cursor: pointer;
 }
 
@@ -323,9 +324,31 @@ a{
     margin-left: 26.5px;
 }
 
-.form .field div>input{
+.form .field div>input[type="text"]{
     height: 50px;
     width: calc(100% - 7px);
+
+    border: 1px solid var(--color-gray-1);
+    border-radius: var(--radius-3);
+
+    font-size: 22px;
+    text-indent: 13.25px;
+}
+
+.form .field div>input[type="password"]{
+    height: 50px;
+    width: calc(100% - 7px);
+
+    border: 1px solid var(--color-gray-1);
+    border-radius: var(--radius-3);
+
+    font-size: 22px;
+    text-indent: 13.25px;
+}
+
+.form .field div>input[type="checkbox"]{
+    height: 24px;
+    width: 24px;
 
     border: 1px solid var(--color-gray-1);
     border-radius: var(--radius-3);

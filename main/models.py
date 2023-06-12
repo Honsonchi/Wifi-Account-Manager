@@ -45,6 +45,9 @@ class UserInfo(models.Model):
     # 座號
     SeatNumber = models.IntegerField('座號')
 
+    # 可否上網
+    Internet = models.BooleanField('可否上網', default=True)
+
     # 備註
     Note = models.TextField('備註', blank=True, null=True)
 
@@ -85,6 +88,9 @@ class Group(models.Model):
 
     # 身分
     UserData = models.ManyToManyField(UserInfo, verbose_name="身分")
+
+    # 可否上網
+    Internet = models.BooleanField('可否上網', default=True)
 
     # 備註
     Note = models.TextField('備註', blank=True, null=True)

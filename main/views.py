@@ -155,6 +155,7 @@ class DeviceCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
 #管理員: 群組管理
 class GroupManaging(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     model = Group
+    paginate_by = 20
     permission_required = ['main.can_assess', 'main.admin']
 
     def get_context_data(self, **kwargs):
@@ -173,7 +174,7 @@ class GroupEdit(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     model = Group
     permission_required = ['main.can_assess', 'main.admin']
     
-    fields = ['Name', 'UserData', 'Tag', 'Note']
+    fields = ['Name', 'UserData', 'Internet', 'Note']
 
     def get_success_url(self):
         return reverse_lazy('group_managing')
@@ -185,6 +186,12 @@ class GroupEdit(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
         else:
             context['now_user'] = ''
         return context
+    
+    def form_valid(self, form):
+        for i in Group.objects.get(id=form.instance.id).UserData.all():
+            i.Internet = form.instance.Internet
+            i.save()
+        return super().form_valid(form)
 
     pk_url_kwarg = 'groupid'
     context_object_name = 'group'
@@ -215,7 +222,7 @@ class GroupCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     model = Group
     permission_required = ['main.can_assess', 'main.admin']
 
-    fields = ['Name', 'UserData', 'Tag', 'Note']
+    fields = ['Name', 'UserData', 'Internet', 'Note']
 
     def get_success_url(self):
         return reverse_lazy('group_managing')

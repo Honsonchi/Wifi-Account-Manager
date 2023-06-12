@@ -5,14 +5,124 @@
 {% endblock title %}
 
 {% block body %}
-<a href="{% url 'group_create' %}">新增群組</a>
-
-{% for group in groups %}
-    <div>
-        {{ group.Name }}
+<div class="container">
+    <div class="head">
+        <p class="title">群組管理</p>
+        <a href="{% url 'group_create' %}">
+            <button class="rect-button button-ani">
+                <div class="icon icon-add"></div>
+                <p>新增群組</p>
+            </button>
+        </a>
     </div>
-    <a href="{% url 'group_edit' group.id %}">編輯</a>
-    <a href="{% url 'group_delete' group.id %}">刪除</a>
-{% endfor %}
+    <div class="hr"></div>
+    <table>
+        <tr>
+            <th>群組名稱</th>
+            <th>人數</th>
+            <th>可否上網</th>
+            <th>操作</th>
+        </tr>
+        
+        {% for group in groups %}
+            <tr>
+                <td>
+                    {{ group.Name }}
+                </td>
+                <td>
+                    {{ group.UserData.all.count }}
+                </td>
+                <td>
+                    {{ group.Internet }}
+                </td>
+                <td class="function">
+                    <a href="{% url 'group_edit' group.id %}">
+                        <p class="movement">編輯</p>
+                    </a>
+                    <a href="{% url 'group_delete' group.id %}">
+                        <p class="movement">刪除</p>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a class="control" href="?page=1">
+                <p>&laquo; 第一頁</p>
+            </a>
+            <a class="control" href="?page={{ page_obj.previous_page_number }}">
+                <p>&lt; 前一頁</p>
+            </a>
+        {% else %}
+            <div class="control disable">
+                <p>&laquo; 第一頁</p>
+            </div>
+            <div class="control disable">
+                <p>&lt; 前一頁</p>
+            </div>
+        {% endif %}
+        {% if 0 < page_obj.number|add:"-2"%}
+            {% if page_obj.number|add:"3" <= page_obj.paginator.num_pages %}
+                {% for page_cnt in page_obj.paginator %}
+                    {% if page_obj.number|add:"-2" <= forloop.counter and forloop.counter < page_obj.number|add:"3" %}
+                        {% if page_obj.number == forloop.counter %}
+                            <a class="page now" href="?page={{forloop.counter}}">
+                                <p>{{ forloop.counter }}</p>
+                            </a>
+                        {% else %}
+                            <a class="page" href="?page={{forloop.counter}}">
+                                <p>{{ forloop.counter }}</p>
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {% for page_cnt in page_obj.paginator %}
+                    {% if page_obj.paginator.num_pages|add:"-5" < forloop.counter and forloop.counter <= page_obj.paginator.num_pages %}
+                        {% if page_obj.number == forloop.counter %}
+                            <a class="page now" href="?page={{forloop.counter}}">
+                                <p>{{ forloop.counter }}</p>
+                            </a>
+                        {% else %}
+                            <a class="page" href="?page={{forloop.counter}}">
+                                <p>{{ forloop.counter }}</p>
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% else %}
+            {% for page_cnt in page_obj.paginator %}
+                {% if forloop.counter <= 5 %}
+                    {% if page_obj.number == forloop.counter %}
+                        <a class="page now" href="?page={{forloop.counter}}">
+                            <p>{{ forloop.counter }}</p>
+                        </a>
+                    {% else %}
+                        <a class="page" href="?page={{forloop.counter}}">
+                            <p>{{ forloop.counter }}</p>
+                        </a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if page_obj.has_next %}
+            <a class="control" href="?page={{ page_obj.next_page_number }}">
+                <p>下一頁 &gt;</p>
+            </a>
+            <a class="control" href="?page={{ page_obj.paginator.num_pages }}">
+                <p>最後一頁 &raquo;</p>
+            </a>
+        {% else %}
+            <div class="control disable">
+                <p>下一頁 &gt;</p>
+            </div>
+            <div class="control disable">
+                <p>最後一頁 &raquo;</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock body %}
