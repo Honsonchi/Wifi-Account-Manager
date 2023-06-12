@@ -14,42 +14,67 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div class="navbar">
-        <a href="{% url 'homepage' %}">
-            <div class="logo">
-                <div></div>
-                <p>大直高中無線網路</p>
-            </div>
-        </a>
-
-        <a href="{% url 'homepage' %}">
-            <p id="homepage-button">首頁</p>
-        </a>
-
-        {% if user.is_authenticated %}
-            <a href="{% url 'device_managing' %}">
-                <p>我的裝置</p>
+    <nav>
+        <ul class="navbar">
+            <a href="{% url 'homepage' %}">
+                <li>
+                    <div class="logo">
+                        <div></div>
+                        <p>大直高中無線網路</p>
+                    </div>
+                </li>
             </a>
-            {% if perms.main.admin %}
-                <a href="{% url 'manage' %}">
-                    <p>裝置管理</p>
+    
+            <a href="{% url 'homepage' %}" class="nav-ani">
+                <li>
+                    <p id="homepage-button">首頁</p>
+                </li>
+            </a>
+    
+            {% if user.is_authenticated %}
+                <a href="{% url 'device_managing' %}" class="nav-ani">
+                    <li>
+                        <p>我的裝置</p>
+                    </li>
                 </a>
-                <a href="{% url 'group_managing' %}">
-                    <p>群組管理</p>
-                </a>
-            {% endif %}
+                {% if perms.main.admin %}
+                    <a href="{% url 'manage' %}" class="nav-ani">
+                        <li>
+                            <p>裝置管理</p>
+                        </li>
+                    </a>
+                    <a href="{% url 'group_managing' %}" class="nav-ani">
+                        <li>
+                            <p>群組管理</p>
+                        </li>
+                    </a>
+                {% endif %}
+                <div class="nav-spacer"></div>
+                <li class="dropdown">
+                    <a class="nav-ani">{{ now_user }}</a>
+                    <ul>
+                        <a href="{% url 'password' %}" class="nav-ani">
+                            <li>
+                                <p>變更密碼</p>
+                            </li> 
+                        </a>
+                        <a href="{% url 'logout' %}" class="nav-ani">
+                            <li>
+                                <p>登出</p>
+                            </li> 
+                        </a>
+                    </ul>
+                </li>
+            {% else %}
             <div class="nav-spacer"></div>
-            <p>{{ now_user }}</p>
-            <a href="{% url 'logout' %}">
-                <p>登出</p>
+            <a href="{% url 'login' %}" class="nav-ani">
+                <li>
+                    <p>登入</p>
+                </li>
             </a>
-        {% else %}
-        <div class="nav-spacer"></div>
-        <a href="{% url 'login' %}">
-            <p>登入</p>
-        </a>
-        {% endif %}
-    </div>
+            {% endif %}
+        </ul>
+    </nav>
 
     <div class="content">
         <div class="main">
