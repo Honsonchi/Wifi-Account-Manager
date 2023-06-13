@@ -1,13 +1,13 @@
+from typing import Any, Dict
 from django.core.exceptions import PermissionDenied
-from django.db.models.query import QuerySet
 from django.urls import path, reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.views.generic import ListView, UpdateView, DeleteView, CreateView, FormView
+from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 from .models import UserInfo, Device, Group, User
 from django.contrib.auth.models import Group as groups
-from .form import DeviceForm, AdminDeviceForm, BaseUserCreateFormSet, UserCreateForm, BaseUserEditForm, BaseUserInfoEditForm
+from .form import DeviceForm, AdminDeviceForm, BaseUserCreateFormSet, UserCreateForm, UserInfoForm
 
 # 首頁
 class HomePage(ListView):
@@ -159,6 +159,7 @@ class DeviceCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
 #管理員: 群組管理
 class GroupManaging(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     model = Group
+    ordering = ['Name']
     paginate_by = 20
     permission_required = ['main.can_assess', 'main.admin']
 
@@ -246,6 +247,7 @@ class GroupCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
 #管理員管理
 class Manage(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     model = Device
+    ordering = ['Owner__UserType', 'Owner__Grade', 'Owner__Class', 'Owner__SeatNumber', 'Name']
     paginate_by = 20
     permission_required = ['main.can_assess', 'main.admin']
 
@@ -343,7 +345,8 @@ class AdminDeviceCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView)
 #管理員人員管理
 class UserManaging(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     model = UserInfo
-    paginate_by=20
+    ordering = ['UserType', 'Grade', 'Class', 'SeatNumber', 'Name']
+    paginate_by = 20
     permission_required = ['main.can_assess', 'main.admin']
 
     def get_context_data(self, **kwargs):
@@ -395,9 +398,11 @@ class UserCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
             if usertype == 0:
                 user_obj.groups.add(groups.objects.get(name='管理員'))
             elif usertype == 1:
-                user_obj.groups.add(groups.objects.get(name='管理員'))
+                user_obj.groups.add(groups.objects.get(name='老師'))
             elif usertype == 2:
-                user_obj.groups.add(groups.objects.get(name='管理員'))
+                user_obj.groups.add(groups.objects.get(name='學生'))
+
+            Group.objects.get(id=formset.cleaned_data[0].get('user_group')).UserData.add(UserInfo.objects.get(UserData=user_obj))
 
             return super().form_valid(form)
         else:
@@ -408,7 +413,8 @@ class UserCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
 #管理員編輯人員
 class UserEdit(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     model = UserInfo
-    fields = ['Name', 'UserType', 'StuId', 'Email', 'Grade', 'Class', 'SeatNumber', 'Internet']
+    form_class = UserInfoForm
+    # fields = ['Name', 'UserType', 'StuId', 'Email', 'Grade', 'Class', 'SeatNumber', 'Internet']
     permission_required = ['main.can_assess', 'main.admin']
 
     def get_success_url(self):
@@ -419,12 +425,63 @@ class UserEdit(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
 
         if self.request.user.is_authenticated:
             context['now_user'] = UserInfo.objects.get(UserData=self.request.user)
+            context['now_edit_user'] = self.get_object().UserData
         else:
             context['now_user'] = ''
+            context['now_edit_user'] = ''
 
         return context
+    
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['user_group'] = Group.objects.get(UserData=self.get_object()).id
+        return initial
+
+    def form_valid(self, form):
+        user_obj = self.get_object()
+        new_group = form.cleaned_data['user_group']
+        print(type(new_group))
+        print(new_group)
+        for g in Group.objects.filter(UserData=user_obj):
+            g.UserData.remove(user_obj)
+        Group.objects.get(id=new_group).UserData.add(user_obj)
+
+        return super().form_valid(form)
 
     pk_url_kwarg = 'userid'
     context_object_name = 'now_edit_member'
     template_name = 'user_edit.html'
 
+#管理員人員刪除
+
+class UserDelete(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
+    model = User
+    permission_required = ['main.can_assess', 'main.admin']
+    
+    def get_success_url(self):
+        return reverse_lazy('user_managing')
+    
+    def form_valid(self, form):
+        now_user = UserInfo.objects.get(UserData=self.request.user)
+        if not self.request.user.has_perm('main.admin'): #如果不是管理員
+            if form.instance.Owner == now_user:
+                return super().form_valid(form)
+            else:
+                raise PermissionDenied()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['now_user'] = UserInfo.objects.get(UserData=self.request.user)
+            context['now_delete_member'] = UserInfo.objects.get(UserData=self.get_object())
+            context['now_delete_member_device'] = Device.objects.filter(Owner=UserInfo.objects.get(UserData=self.get_object())).count()
+        else:
+            context['now_user'] = ''
+            context['now_delete_member'] = ''
+            context['now_delete_member_device'] = 0
+        return context
+
+    pk_url_kwarg = 'userid'
+    context_object_name = 'now_delete_user'
+    template_name = 'user_delete.html'

@@ -8,7 +8,7 @@
     <div class="title">
         <div class="icon icon-contact_page"></div>
         <p>{{ now_edit_member.Name }}</p>
-        <a href="">
+        <a href="{% url 'user_delete' now_edit_user.id %}">
             <button class="sqr-button button-ani r20px">
                 <div class="icon icon-delete"></div>
                 <p>刪除人員</p>

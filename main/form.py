@@ -2,7 +2,7 @@ from typing import Any
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.forms import inlineformset_factory
-from .models import Device, User, UserInfo
+from .models import Device, User, UserInfo, Group
 import re
 
 class DeviceForm(forms.ModelForm):
@@ -45,9 +45,17 @@ class UserCreateForm(UserCreationForm):
         del self.fields['password2']
 
 class UserInfoForm(forms.ModelForm):
+    def get_choices():
+        choices=[]
+        for i in Group.objects.all():
+            choices.append((i.id, i.Name))
+        return choices
+
+    user_group = forms.ChoiceField(widget=forms.Select, choices=get_choices(), label='所在群組')
+
     class Meta:
         model = UserInfo
-        fields = ['Name', 'UserType', 'StuId', 'Email', 'Grade', 'Class', 'SeatNumber', 'Internet']
+        fields = ['Name', 'UserType', 'user_group', 'StuId', 'Email', 'Grade', 'Class', 'SeatNumber', 'Internet', 'Note']
 
 
 class BaseUserEditForm(forms.ModelForm):

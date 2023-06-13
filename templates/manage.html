@@ -35,13 +35,16 @@
                     {% endif %}
                 </td>
                 <td>
-                    {% if device.Owner.UserType == 2 %}
-                        {{ device.Owner.Grade }}{{ device.Owner.Class|stringformat:"02i" }}{{ device.Owner.SeatNumber|stringformat:"02i" }} {{ device.Owner.Name }}
-                    {% elif device.Owner.UserType == 1 %}
-                        {{ device.Owner.Name }}
-                    {% else %}
-                        {{ device.Owner.Name }}
-                    {% endif %}
+                    <a href="{% url 'user_edit' device.Owner.id %}">
+                        {% if device.Owner.UserType == 2 %}
+                            {{ device.Owner.Grade }}{{ device.Owner.Class|stringformat:"02i" }}{{ device.Owner.SeatNumber|stringformat:"02i" }} {{ device.Owner.Name }}
+                        {% elif device.Owner.UserType == 1 %}
+                            {{ device.Owner.Name }}
+                        {% else %}
+                            {{ device.Owner.Name }}
+                        {% endif %}
+                    </a>
+                </td>
                 </td>
                 <td><a href="{% url 'admin_device_edit' device.id %}">{{ device.Name }}</a></td>
                 <td>{{ device.MacAddress|slice:"0:2" }}:{{ device.MacAddress|slice:"2:4" }}:{{ device.MacAddress|slice:"4:6" }}:{{ device.MacAddress|slice:"6:8" }}:{{ device.MacAddress|slice:"8:10" }}:{{ device.MacAddress|slice:"10:12" }}</td>

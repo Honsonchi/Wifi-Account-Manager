@@ -862,6 +862,11 @@ a{
     padding-right: 20px;
 }
 
+.big_ctx_block .head-info>.title{
+    font-size: 32px;
+    font-weight: 700;
+}
+
 .big_ctx_block .head p:nth-child(1){
     font-size: 32px;
     font-weight: 500;

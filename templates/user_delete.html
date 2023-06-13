@@ -1,26 +1,27 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    刪除群組 {{ group.Name }}
+刪除人員
 {% endblock title %}
 
 {% block body %}
     <div class="container">
         <div class="title">
-            <p>刪除群組</p>
+            <p>刪除人員</p>
         </div>
 
         <div class="hr"></div>
         
-        <p class="inline">確定刪除以下群組嗎？</p>
+        <p class="inline">確定刪除以下人員嗎？</p>
 
         <div class="spacer"></div>
 
         <div class="big_ctx_block">
-            <div class="icon icon-group"></div>
+            <div class="icon icon-contact_page"></div>
             <div class="head-info">
-                <p>{{ group.Name }}</p>
-                <p>共 {{ group.UserData.all|length }} 人</p>
+                <p class="title">{{ now_delete_member }}</p>
+                <p>{{ now_delete_user }}</p>
+                <p>擁有 {{ now_delete_member_device }} 台裝置</p>
             </div>
         </div>
 
