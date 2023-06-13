@@ -21,7 +21,7 @@ class UserInfo(models.Model):
     Name = models.CharField('姓名', max_length=75)
 
     # 學號
-    StuId = models.IntegerField('學號')
+    StuId = models.IntegerField('學號', default=0)
 
     # Email
     Email = models.EmailField('Email', blank=True, null=True)
@@ -37,13 +37,13 @@ class UserInfo(models.Model):
         (3, '高三')
     ]
 
-    Grade = models.IntegerField('年級', choices=GRADES)
+    Grade = models.IntegerField('年級', choices=GRADES, default=0)
 
     # 班級
-    Class = models.IntegerField('班級')
+    Class = models.IntegerField('班級', default=0)
 
     # 座號
-    SeatNumber = models.IntegerField('座號')
+    SeatNumber = models.IntegerField('座號', default=0)
 
     # 可否上網
     Internet = models.BooleanField('可否上網', default=True)

@@ -9,7 +9,7 @@
 <div class="container">
     <div class="head">
         <p class="title">人員管理</p>
-        <a href="">
+        <a href="{% url 'user_create' %}">
             <button class="rect-button button-ani">
                 <div class="icon icon-add"></div>
                 <p>新增人員</p>
@@ -55,6 +55,11 @@
                 </td>
                 <td>
                     {{ member.Internet }}
+                </td>
+                <td class="function">
+                    <a href="{% url 'user_edit' member.id %}">
+                        <p class="movement">編輯</p>
+                    </a>
                 </td>
             </tr>
         {% endfor %}

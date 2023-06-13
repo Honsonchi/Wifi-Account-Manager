@@ -2,12 +2,12 @@ from django.core.exceptions import PermissionDenied
 from django.db.models.query import QuerySet
 from django.urls import path, reverse_lazy
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.views.generic import ListView, UpdateView, DeleteView, CreateView
-from .models import UserInfo, Device, Group
-from .form import DeviceForm, AdminDeviceForm
+from django.views.generic import ListView, UpdateView, DeleteView, CreateView, FormView
+from .models import UserInfo, Device, Group, User
+from django.contrib.auth.models import Group as groups
+from .form import DeviceForm, AdminDeviceForm, BaseUserCreateFormSet, UserCreateForm, BaseUserEditForm, BaseUserInfoEditForm
 
 # 首頁
 class HomePage(ListView):
@@ -17,10 +17,15 @@ class HomePage(ListView):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
             context['now_user'] = UserInfo.objects.get(UserData=self.request.user)
-            context['now_user_group'] = Group.objects.get(UserData__UserData=self.request.user)
+            now_user_group = Group.objects.filter(UserData__UserData=self.request.user)
+            if now_user_group.count() > 0:
+                context['now_user_group'] = now_user_group[0].Name
+            else:
+                context['now_user_group'] = '無'
         else:
             context['now_user'] = ''
-            context['now_user_group'] = ''
+            context['now_user_group'] = '無'
+        
         return context
     
     def get_queryset(self):
@@ -28,8 +33,6 @@ class HomePage(ListView):
             return Device.objects.filter(Owner__UserData=self.request.user)
         return super().get_queryset()
     
-
-
     context_object_name = 'devices'
     template_name = 'homepage.html'
 
@@ -47,6 +50,7 @@ class PasswordChange(PermissionRequiredMixin, LoginRequiredMixin, PasswordChange
             context['now_user'] = ''
         return context
 
+    redirect_field_name = reverse_lazy('homepage')
     template_name = 'registration/password.html'
 
 # 裝置管理
@@ -337,7 +341,7 @@ class AdminDeviceCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView)
     template_name = 'admin_device_create.html'
 
 #管理員人員管理
-class MemberManaging(PermissionRequiredMixin, LoginRequiredMixin, ListView):
+class UserManaging(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     model = UserInfo
     paginate_by=20
     permission_required = ['main.can_assess', 'main.admin']
@@ -353,4 +357,74 @@ class MemberManaging(PermissionRequiredMixin, LoginRequiredMixin, ListView):
         return context
     
     context_object_name = 'members'
-    template_name = 'member_managing.html'
+    template_name = 'user_managing.html'
+
+#管理員新增人員
+class UserCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
+    model = User
+    form_class = UserCreateForm
+    permission_required = ['main.can_assess', 'main.admin']
+
+    def get_success_url(self):
+        return reverse_lazy('user_managing')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context["formset"] = BaseUserCreateFormSet(self.request.POST)
+        else:
+            context["formset"] = BaseUserCreateFormSet
+
+        if self.request.user.is_authenticated:
+            context['now_user'] = UserInfo.objects.get(UserData=self.request.user)
+        else:
+            context['now_user'] = ''
+
+        return context
+    
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['formset']
+        if form.is_valid() and formset.is_valid():
+            self.object = form.save()
+            formset.instance = self.object
+            formset.save()
+
+            usertype = formset.cleaned_data[0].get('UserType')
+            user_obj = User.objects.get(id=formset.instance.id)
+            if usertype == 0:
+                user_obj.groups.add(groups.objects.get(name='管理員'))
+            elif usertype == 1:
+                user_obj.groups.add(groups.objects.get(name='管理員'))
+            elif usertype == 2:
+                user_obj.groups.add(groups.objects.get(name='管理員'))
+
+            return super().form_valid(form)
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
+    template_name = 'user_create.html'
+
+#管理員編輯人員
+class UserEdit(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+    model = UserInfo
+    fields = ['Name', 'UserType', 'StuId', 'Email', 'Grade', 'Class', 'SeatNumber', 'Internet']
+    permission_required = ['main.can_assess', 'main.admin']
+
+    def get_success_url(self):
+        return reverse_lazy('user_managing')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if self.request.user.is_authenticated:
+            context['now_user'] = UserInfo.objects.get(UserData=self.request.user)
+        else:
+            context['now_user'] = ''
+
+        return context
+
+    pk_url_kwarg = 'userid'
+    context_object_name = 'now_edit_member'
+    template_name = 'user_edit.html'
+

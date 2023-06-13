@@ -1,6 +1,8 @@
-from typing import Any, Dict
+from typing import Any
 from django import forms
-from .models import Device
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.forms import inlineformset_factory
+from .models import Device, User, UserInfo
 import re
 
 class DeviceForm(forms.ModelForm):
@@ -32,3 +34,30 @@ class AdminDeviceForm(forms.ModelForm):
             raise forms.ValidationError('MAC位址格式有誤')
 
         return mac_address.upper()
+    
+class UserCreateForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password1']
+    
+    def __init__(self, *args, **kwargs):
+        super(UserCreateForm, self).__init__(*args, **kwargs)
+        del self.fields['password2']
+
+class UserInfoForm(forms.ModelForm):
+    class Meta:
+        model = UserInfo
+        fields = ['Name', 'UserType', 'StuId', 'Email', 'Grade', 'Class', 'SeatNumber', 'Internet']
+
+
+class BaseUserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username']
+
+class BaseUserInfoEditForm(forms.ModelForm):
+    class Meta:
+        model = UserInfo
+        fields = ['Name', 'UserType', 'StuId', 'Email', 'Grade', 'Class', 'SeatNumber', 'Internet']
+
+BaseUserCreateFormSet = inlineformset_factory(parent_model=User, model=UserInfo, form=UserInfoForm, extra=1, can_delete=False)

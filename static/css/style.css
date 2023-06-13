@@ -324,18 +324,10 @@ a{
     margin-left: 26.5px;
 }
 
-.form .field div>input[type="text"]{
-    height: 50px;
-    width: calc(100% - 7px);
-
-    border: 1px solid var(--color-gray-1);
-    border-radius: var(--radius-3);
-
-    font-size: 22px;
-    text-indent: 13.25px;
-}
-
-.form .field div>input[type="password"]{
+.form .field div>input[type="text"],
+.form .field div>input[type="password"],
+.form .field div>input[type="email"],
+.form .field div>input[type="number"]{
     height: 50px;
     width: calc(100% - 7px);
 

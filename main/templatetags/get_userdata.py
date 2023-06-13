@@ -7,7 +7,7 @@ def get_userdata(group, userdata):
     try:
         return group.get(UserData=userdata).Name
     
-    except group.DoesNotExist:
+    except:
         return ""
 
     

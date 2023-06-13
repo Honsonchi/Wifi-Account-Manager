@@ -1,19 +1,17 @@
 {% extends 'base.html' %}
 
-{% block title %}
-    編輯群組 {{ group.Name }}
-{% endblock title %}
+{% block title %}人員編輯{% endblock title %}
 
 {% block body %}
 
 <div class="container">
     <div class="title">
-        <div class="icon icon-group"></div>
-        <p>{{ group.Name }}</p>
-        <a href="{% url 'group_delete' group.id %}">
+        <div class="icon icon-contact_page"></div>
+        <p>{{ now_edit_member.Name }}</p>
+        <a href="">
             <button class="sqr-button button-ani r20px">
                 <div class="icon icon-delete"></div>
-                <p>刪除群組</p>
+                <p>刪除人員</p>
             </button>
         </a>
     </div>

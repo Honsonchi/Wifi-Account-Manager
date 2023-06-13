@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}新增人員{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <div class="title">
+        <p>新增人員</p>
+    </div>
+
+    <div class="hr"></div>
+
+    <form action="" method="post" class="form">
+        {% csrf_token %}
+        
+            {% for field in form %}
+                <div class="field">
+                    <p>{{ field.label }}</p>
+                    <div>
+                        {{ field }}
+                        {% if field.errors %}
+                            <p>{{ field.errors }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            {{ formset.management_form }}
+            {% for form in formset.forms %}
+                {% for field in form %}
+                    {% if field.name != 'id' and field.name != 'UserData' %}
+                        <div class="field">
+                            <p>{{ field.label }}</p>
+                            <div>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <p>{{ field.errors }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+            <div class="field">
+                <div><p>{{ formset.non_form_errors }}</p></div>
+            </div>
+
+        <div class="function">
+            <input class="primary-button large-button button-ani" type="submit" value="確定">
+            <input class="primary-button large-button white-button button-ani" type="button" value="返回" onclick="javascript:window.history.back();">
+        </div>
+    </form>
+</div>
+{% endblock body %}
