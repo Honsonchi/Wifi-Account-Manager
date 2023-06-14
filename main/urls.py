@@ -1,5 +1,9 @@
 from django.urls import path, include
-from .views import HomePage, PasswordChange, DeviceManaging, DeviceEdit, DeviceDelete, DeviceCreate, GroupManaging, GroupEdit, GroupDelete, GroupCreate, Manage, AdminDeviceEdit, AdminDeviceDelete, AdminDeviceCreate, UserManaging, UserCreate, UserEdit, UserDelete
+from .views import (HomePage, PasswordChange, DeviceManaging, DeviceEdit, DeviceDelete, DeviceCreate,
+                    GroupManaging, GroupEdit, GroupDelete, GroupCreate,
+                    Manage, AdminDeviceEdit, AdminDeviceDelete, AdminDeviceCreate,
+                    UserManaging, UserCreate, UserEdit, UserDelete,
+                    BatchCreateUser)
 
 urlpatterns = [
     # 首頁路徑
@@ -33,4 +37,6 @@ urlpatterns = [
     path('user/create/', UserCreate.as_view(), name='user_create'),
     path('user/edit/<int:userid>/', UserEdit.as_view(), name='user_edit'),
     path('user/delete/<int:userid>/', UserDelete.as_view(), name='user_delete'),
+
+    path('user/create/batch/', BatchCreateUser.as_view(), name='user_batch_create'),
 ]

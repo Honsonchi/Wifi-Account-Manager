@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}批次新增 / 更新人員{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <div class="title">
+        <p>批次新增 / 更新人員</p>
+    </div>
+
+    <div class="hr"></div>
+
+    <form action="" method="post" class="form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="field">
+            <p>範例檔案：</p>
+            <p><a href="{% get_media_prefix %}user_batch_example.xlsx" class="rect-button button-ani">下載</a></p>
+        </div>
+            {% for field in form %}
+                <div class="field">
+                    <p>{{ field.label }}</p>
+                    <div>
+                        {{ field }}
+                        {% if field.errors %}
+                            <p>{{ field.errors }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+
+        <div class="function">
+            <input class="primary-button large-button button-ani" type="submit" value="確定">
+            <input class="primary-button large-button white-button button-ani" type="button" value="返回" onclick="javascript:window.history.back();">
+        </div>
+    </form>
+</div>
+
+{% endblock body %}

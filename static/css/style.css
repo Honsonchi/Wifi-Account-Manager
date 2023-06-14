@@ -765,6 +765,10 @@ a{
     background-image: url("/static/img/icon/contact_page.svg");
 }
 
+.icon-terminal{
+    background-image: url("/static/img/icon/terminal.svg");
+}
+
 .sqr-button p{
     font-size: 16.5px;
     font-weight: 700;
@@ -801,7 +805,8 @@ a{
     border-radius: var(--radius-3);
 
     padding: 12px;
-
+    margin-right: 12px;
+    
     display: flex;
     justify-content: center;
     align-items: center;

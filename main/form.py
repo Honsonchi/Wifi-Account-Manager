@@ -1,6 +1,5 @@
-from typing import Any
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm
 from django.forms import inlineformset_factory
 from .models import Device, User, UserInfo, Group
 import re
@@ -57,15 +56,7 @@ class UserInfoForm(forms.ModelForm):
         model = UserInfo
         fields = ['Name', 'UserType', 'user_group', 'StuId', 'Email', 'Grade', 'Class', 'SeatNumber', 'Internet', 'Note']
 
-
-class BaseUserEditForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['username']
-
-class BaseUserInfoEditForm(forms.ModelForm):
-    class Meta:
-        model = UserInfo
-        fields = ['Name', 'UserType', 'StuId', 'Email', 'Grade', 'Class', 'SeatNumber', 'Internet']
+class UploadFileForm(forms.Form):
+    file = forms.FileField(label='Excel 檔案')
 
 BaseUserCreateFormSet = inlineformset_factory(parent_model=User, model=UserInfo, form=UserInfoForm, extra=1, can_delete=False)

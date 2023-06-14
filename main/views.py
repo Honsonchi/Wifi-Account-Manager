@@ -1,13 +1,15 @@
 from typing import Any, Dict
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse
 from django.urls import path, reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.views.generic import ListView, UpdateView, DeleteView, CreateView
+from django.views.generic import ListView, UpdateView, DeleteView, CreateView, FormView
 from .models import UserInfo, Device, Group, User
 from django.contrib.auth.models import Group as groups
-from .form import DeviceForm, AdminDeviceForm, BaseUserCreateFormSet, UserCreateForm, UserInfoForm
+from .form import DeviceForm, AdminDeviceForm, BaseUserCreateFormSet, UserCreateForm, UserInfoForm, UploadFileForm
+import openpyxl
 
 # 首頁
 class HomePage(ListView):
@@ -485,3 +487,97 @@ class UserDelete(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
     pk_url_kwarg = 'userid'
     context_object_name = 'now_delete_user'
     template_name = 'user_delete.html'
+
+class BatchCreateUser(FormView):
+    form_class = UploadFileForm
+    template_name = 'batch_create_user.html'
+
+    success_url = reverse_lazy('user_managing')
+
+    def form_valid(self, form):
+        file = form.cleaned_data['file']
+
+        excel_file = openpyxl.load_workbook(file.open())
+        wb = excel_file.worksheets[0]
+
+        for row in wb.iter_rows():
+            data = list(map(lambda r: r.value, row))
+            content_error = False
+            for i in range(len(data)):
+                if (str(data[i]).startswith('$') and str(data[i]).endswith('$')):
+                    content_error = True
+                    break
+                if data[i] == None:
+                    if i == 0:
+                        content_error = True
+                        break
+                    elif i == 6:
+                        data[i] = ''
+                    elif 5 <= i and i <= 9:
+                        data[i] = 0
+                    elif i == 10:
+                        data[i] = True
+                    elif i == 11:
+                        data[i] = ''
+
+            if str(data[3]) == '管理員':
+                usertype = 0
+            elif str(data[3]) == '老師':
+                usertype = 1
+            elif str(data[3]) == '學生':
+                usertype = 2
+            else:
+                content_error = True
+
+            if content_error:
+                continue
+
+            UserObj = User.objects.filter(username=str(data[0]))
+            if UserObj.count() > 0:
+                UserObj[0].username = str(data[0])
+                UserObj[0].set_password(str(data[1]))
+                UserObj[0].save()
+                UserInfoObj = UserInfo.objects.get(UserData=UserObj[0])
+                UserInfoObj.UserType = usertype
+                UserInfoObj.Name = str(data[2])
+                UserInfoObj.StuId = int(data[5])
+                UserInfoObj.Email = str(data[6])
+                UserInfoObj.Grade = int(data[7])
+                UserInfoObj.Class = int(data[8])
+                UserInfoObj.SeatNumber = int(data[9])
+                UserInfoObj.Internet = bool(data[10])
+                UserInfoObj.Note = str(data[11])
+                UserInfoObj.save()
+            else:
+                for i in range(len(data)):
+                    if data[i] == None:
+                        if 1 <= i and i <= 4:
+                            content_error = True
+                            break
+
+                if content_error:
+                    continue
+
+                created_user = User.objects.create_user(username=str(data[0]), password=str(data[1]))
+                created_user.groups.add(groups.objects.get(name=str(data[3])))
+                User.save(created_user)
+
+                created_user_info = UserInfo.objects.create(UserData=created_user,
+                                        UserType=usertype,
+                                        Name=str(data[2]),
+                                        StuId=int(data[5]),
+                                        Email=str(data[6]),
+                                        Grade=int(data[7]),
+                                        Class=int(data[8]),
+                                        SeatNumber=int(data[9]),
+                                        Internet=bool(data[10]),
+                                        Note=str(data[11]))
+                UserInfo.save(created_user_info)
+
+                group, created = Group.objects.get_or_create(Name=str(data[4]),
+                                                             defaults={'Name': str(data[4])})
+                group.UserData.add(created_user_info)
+
+                Group.save(group)
+
+        return super().form_valid(form)
