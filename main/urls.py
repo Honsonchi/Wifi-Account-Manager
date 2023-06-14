@@ -1,6 +1,6 @@
 from django.urls import path, include
 from .views import (HomePage, PasswordChange, DeviceManaging, DeviceEdit, DeviceDelete, DeviceCreate,
-                    GroupManaging, GroupEdit, GroupDelete, GroupCreate,
+                    GroupManaging, GroupEdit, GroupCreate,
                     Manage, AdminDeviceEdit, AdminDeviceDelete, AdminDeviceCreate,
                     UserManaging, UserCreate, UserEdit, UserDelete,
                     BatchCreateUser)
@@ -29,7 +29,7 @@ urlpatterns = [
     #管理員 群組 相關路徑
     path('group/', GroupManaging.as_view(), name='group_managing'),
     path('group/edit/<int:groupid>/', GroupEdit.as_view(), name='group_edit'),
-    path('group/delete/<int:groupid>/', GroupDelete.as_view(), name='group_delete'),
+    # path('group/delete/<int:groupid>/', GroupDelete.as_view(), name='group_delete'),
     path('group/create/', GroupCreate.as_view(), name='group_create'),
 
     #管理員 人員 相關路徑

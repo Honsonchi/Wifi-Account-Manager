@@ -215,24 +215,25 @@ class GroupEdit(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     template_name = 'group_edit.html'
 
 # 管理員: 群組刪除
-class GroupDelete(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
-    model = Group
-    permission_required = ['main.can_assess', 'main.admin']
-    
-    def get_success_url(self):
-        return reverse_lazy('group_managing')
+# class GroupDelete(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
+#     model = Group
+#     permission_required = ['main.can_assess', 'main.admin']
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if self.request.user.is_authenticated:
-            context['now_user'] = UserInfo.objects.get(UserData=self.request.user)
-        else:
-            context['now_user'] = ''
-        return context
+#     def get_success_url(self):
+#         return reverse_lazy('group_managing')
 
-    pk_url_kwarg = 'groupid'
-    context_object_name = 'group'
-    template_name = 'group_delete.html'
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         if self.request.user.is_authenticated:
+#             context['now_user'] = UserInfo.objects.get(UserData=self.request.user)
+#         else:
+#             context['now_user'] = ''
+
+#         return context
+
+#     pk_url_kwarg = 'groupid'
+#     context_object_name = 'group'
+#     template_name = 'group_delete.html'
 
 # 裝置創建
 class GroupCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):

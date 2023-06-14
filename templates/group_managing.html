@@ -45,9 +45,9 @@
                         <a href="{% url 'group_edit' group.id %}">
                             <p class="movement">編輯</p>
                         </a>
-                        <a href="{% url 'group_delete' group.id %}">
+                        {% comment %} <a href="{% url 'group_delete' group.id %}">
                             <p class="movement">刪除</p>
-                        </a>
+                        </a> {% endcomment %}
                     </td>
                 </tr>
             {% endfor %}
