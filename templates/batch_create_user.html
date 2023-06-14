@@ -18,20 +18,23 @@
             <p>範例檔案：</p>
             <p><a href="{% get_media_prefix %}user_batch_example.xlsx" class="rect-button button-ani">下載</a></p>
         </div>
-            {% for field in form %}
-                <div class="field">
-                    <p>{{ field.label }}</p>
-                    <div>
-                        {{ field }}
-                        {% if field.errors %}
-                            <p>{{ field.errors }}</p>
-                        {% endif %}
-                    </div>
-                </div>
-            {% endfor %}
+
+        <div class="drag-zone">
+            <div class="icon icon-upload_file"></div>
+            <p class="drag-zone-text">拖曳檔案至此處</p>
+            <p class="drag-zone-file">尚未上傳任何檔案</p>
+            <input type="button" value="選擇檔案" class="primary-button drag-zone-button"></input>
+            <input type="file" name="file" class="drag-zone-input" accept=".xlsx, .xls" hidden>
+        </div>
+
+        {% for field in form %}
+            {% if field.errors %}
+                <p>{{ field.errors }}</p>
+            {% endif %}
+        {% endfor %}
 
         <div class="function">
-            <input class="primary-button large-button button-ani" type="submit" value="確定">
+            <input class="primary-button large-button button-ani submit" type="submit" value="確定">
             <input class="primary-button large-button white-button button-ani" type="button" value="返回" onclick="javascript:window.history.back();">
         </div>
     </form>
