@@ -102,6 +102,10 @@ a{
     right: 20px;
 }
 
+.mgt16px{
+    margin-top: 16px;
+}
+
 /* Logo */
 /* ------------------------------ */
 
@@ -647,6 +651,10 @@ a{
     align-items: center;
 }
 
+.container>.head .spacer{
+    flex-grow: 1;
+}
+
 .container>.head>.title{
     padding-right: 24px;
 }
@@ -977,11 +985,11 @@ a{
 .container>.spacer{
     height:16px;
 }
-.container>table{
+.container table{
     width: 100%;
 }
 
-.container>table th{
+.container table th{
     font-size: 24px;
     font-weight: 700;
     text-align: left;
@@ -991,56 +999,53 @@ a{
     padding: 10px 5px 10px 5px;
 }
 
-.container>table a{
+.container table a{
     color: #000000;
 }
 
-.container>table td{
+.container table td{
     font-size: 18px;
     padding: 10px 5px 10px 5px;
 }
 
-.container>table tr{
+.container table tr{
     background-color: var(--color-white);
 }
 
-.container>table tr:hover{
+.container table tr:hover{
     filter: brightness(95%);
 }
 
-.container>table th{
+.container table th{
     background-color: var(--color-white);
 }
 
-.container>table th:hover{
+.container table th:hover{
     filter: brightness(95%);
 }
 
-.container>table td{
+.container table td{
     background-color: var(--color-white);
 }
 
-.container>table td:hover{
+.container table td:hover{
     filter: brightness(95%);
 }
 
-.container>table .function{
+.container table .function{
     display: flex;
     justify-content: left;
     align-items: center;
 }
 
-.container>table .function a:last-child{
+.container table .function a:last-child{
     padding-left: 10px;
 }
 
-.container>table .function p{
+.container table .function p{
     color: var(--color-dcsh-blue-1);
     text-decoration: underline;
 }
-
-
-
 
 .pagination{
     display: flex;

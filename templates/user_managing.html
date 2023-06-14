@@ -24,58 +24,68 @@
         </a>
     </div>
     <div class="hr"></div>
-    <table>
-        <tr>
-            <th>身分</th>
-            <th>姓名</th>
-            <th>班級座號</th>
-            <th>所在群組</th>
-            <th>裝置數</th>
-            <th>可否上網</th>
-            <th>操作</th>
-        </tr>
-        
-        {% for member in members %}
+
+    <form method="post">
+        {% csrf_token %}
+        <table>
             <tr>
-                <td>
-                    {% if member.UserType == 2 %}
-                        學生
-                    {% elif member.UserType == 1 %}
-                        老師
-                    {% else %}
-                        管理員
-                    {% endif %}
-                </td>
-                <td>
-                    {{ member.Name }}
-                </td>
-                <td>
-                    {% if member.UserType == 2 %}
-                        {{ member.Grade }}{{ member.Class|stringformat:"02i" }}{{ member.SeatNumber|stringformat:"02i" }}
-                    {% endif %}
-                </td>
-                <td>
-                    <a href="{% url 'group_edit' Group|get_userdata_obj:member %}">
-                        {{ Group|get_userdata:member }}
-                    </a>
-                </td>
-                <td>
-                    {{ Device|get_device_count:member }}
-                </td>
-                <td>
-                    {{ member.Internet }}
-                </td>
-                <td class="function">
-                    <a href="{% url 'user_edit' member.id %}">
-                        <p class="movement">編輯</p>
-                    </a>
-                    <a href="{% url 'user_delete' member.UserData.id %}">
-                        <p class="movement">刪除</p>
-                    </a>
-                </td>
+                <th></th>
+                <th>身分</th>
+                <th>姓名</th>
+                <th>班級座號</th>
+                <th>所在群組</th>
+                <th>裝置數</th>
+                <th>可否上網</th>
+                <th>操作</th>
             </tr>
-        {% endfor %}
-    </table>
+            
+            {% for member in members %}
+                <tr>
+                    <td>
+                        <input type="checkbox" name="selected_objects" value="{{ member.UserData.id }}">
+                    </td>
+                    <td>
+                        {% if member.UserType == 2 %}
+                            學生
+                        {% elif member.UserType == 1 %}
+                            老師
+                        {% else %}
+                            管理員
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ member.Name }}
+                    </td>
+                    <td>
+                        {% if member.UserType == 2 %}
+                            {{ member.Grade }}{{ member.Class|stringformat:"02i" }}{{ member.SeatNumber|stringformat:"02i" }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'group_edit' Group|get_userdata_obj:member %}">
+                            {{ Group|get_userdata:member }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ Device|get_device_count:member }}
+                    </td>
+                    <td>
+                        {{ member.Internet }}
+                    </td>
+                    <td class="function">
+                        <a href="{% url 'user_edit' member.id %}">
+                            <p class="movement">編輯</p>
+                        </a>
+                        <a href="{% url 'user_delete' member.UserData.id %}">
+                            <p class="movement">刪除</p>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" class="primary-button warring-button button-ani mgt16px" value="刪除所選人員">
+    </form>
+
     <div class="pagination">
         {% if page_obj.has_previous %}
             <a class="control" href="?page=1">

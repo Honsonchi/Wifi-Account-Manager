@@ -14,51 +14,58 @@
         </a>
     </div>
     <div class="hr"></div>
-    <table>
-        <tr>
-            <th>身分</th>
-            <th>擁有人</th>
-            <th>裝置名稱</th>
-            <th>MAC位址</th>
-            <th>操作</th>
-        </tr>
-        
-        {% for device in devices %}
+    <form method="post">
+        {% csrf_token %}
+        <table>
             <tr>
-                <td>
-                    {% if device.Owner.UserType == 2 %}
-                        學生
-                    {% elif device.Owner.UserType == 1 %}
-                        老師
-                    {% else %}
-                        管理員
-                    {% endif %}
-                </td>
-                <td>
-                    <a href="{% url 'user_edit' device.Owner.id %}">
-                        {% if device.Owner.UserType == 2 %}
-                            {{ device.Owner.Grade }}{{ device.Owner.Class|stringformat:"02i" }}{{ device.Owner.SeatNumber|stringformat:"02i" }} {{ device.Owner.Name }}
-                        {% elif device.Owner.UserType == 1 %}
-                            {{ device.Owner.Name }}
-                        {% else %}
-                            {{ device.Owner.Name }}
-                        {% endif %}
-                    </a>
-                </td>
-                </td>
-                <td><a href="{% url 'admin_device_edit' device.id %}">{{ device.Name }}</a></td>
-                <td>{{ device.MacAddress|slice:"0:2" }}:{{ device.MacAddress|slice:"2:4" }}:{{ device.MacAddress|slice:"4:6" }}:{{ device.MacAddress|slice:"6:8" }}:{{ device.MacAddress|slice:"8:10" }}:{{ device.MacAddress|slice:"10:12" }}</td>
-                <td class="function">
-                    <a href="{% url 'admin_device_edit' device.id %}">
-                        <p class="movement">編輯</p>
-                    </a>
-                    <a href="{% url 'admin_device_delete' device.id %}">
-                        <p class="movement">刪除</p>
-                    </a>
-                </td>
+                <th></th>
+                <th>身分</th>
+                <th>擁有人</th>
+                <th>裝置名稱</th>
+                <th>MAC位址</th>
+                <th>操作</th>
             </tr>
-        {% endfor %}
-    </table>
+            
+            {% for device in devices %}
+                <tr>
+                    <td><input type="checkbox" name="selected_objects" value="{{ device.id }}"></td>
+                    <td>
+                        {% if device.Owner.UserType == 2 %}
+                            學生
+                        {% elif device.Owner.UserType == 1 %}
+                            老師
+                        {% else %}
+                            管理員
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'user_edit' device.Owner.id %}">
+                            {% if device.Owner.UserType == 2 %}
+                                {{ device.Owner.Grade }}{{ device.Owner.Class|stringformat:"02i" }}{{ device.Owner.SeatNumber|stringformat:"02i" }} {{ device.Owner.Name }}
+                            {% elif device.Owner.UserType == 1 %}
+                                {{ device.Owner.Name }}
+                            {% else %}
+                                {{ device.Owner.Name }}
+                            {% endif %}
+                        </a>
+                    </td>
+                    </td>
+                    <td><a href="{% url 'admin_device_edit' device.id %}">{{ device.Name }}</a></td>
+                    <td>{{ device.MacAddress|slice:"0:2" }}:{{ device.MacAddress|slice:"2:4" }}:{{ device.MacAddress|slice:"4:6" }}:{{ device.MacAddress|slice:"6:8" }}:{{ device.MacAddress|slice:"8:10" }}:{{ device.MacAddress|slice:"10:12" }}</td>
+                    <td class="function">
+                        <a href="{% url 'admin_device_edit' device.id %}">
+                            <p class="movement">編輯</p>
+                        </a>
+                        <a href="{% url 'admin_device_delete' device.id %}">
+                            <p class="movement">刪除</p>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" class="primary-button warring-button button-ani mgt16px" value="刪除所選裝置">
+    </form>
+
     <div class="pagination">
         {% if page_obj.has_previous %}
             <a class="control" href="?page=1">

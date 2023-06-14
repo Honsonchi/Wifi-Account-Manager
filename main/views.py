@@ -165,6 +165,16 @@ class GroupManaging(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     paginate_by = 20
     permission_required = ['main.can_assess', 'main.admin']
 
+    def post(self, request, *args, **kwargs):
+        selected_ids = request.POST.getlist('selected_objects')
+        if len(selected_ids) > 0:
+            for i in Group.objects.filter(id__in=selected_ids):
+                for user in i.UserData.all():
+                    user.UserData.delete()
+            Group.objects.filter(id__in=selected_ids).delete()
+            return redirect('.')
+        return redirect('.')
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
@@ -252,6 +262,13 @@ class Manage(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     ordering = ['Owner__UserType', 'Owner__Grade', 'Owner__Class', 'Owner__SeatNumber', 'Name']
     paginate_by = 20
     permission_required = ['main.can_assess', 'main.admin']
+
+    def post(self, request, *args, **kwargs):
+        selected_ids = request.POST.getlist('selected_objects')
+        if len(selected_ids) > 0:
+            Device.objects.filter(id__in=selected_ids).delete()
+            return redirect('.')
+        return redirect('.')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -350,6 +367,13 @@ class UserManaging(PermissionRequiredMixin, LoginRequiredMixin, ListView):
     ordering = ['UserType', 'Grade', 'Class', 'SeatNumber', 'Name']
     paginate_by = 20
     permission_required = ['main.can_assess', 'main.admin']
+
+    def post(self, request, *args, **kwargs):
+        selected_ids = request.POST.getlist('selected_objects')
+        if len(selected_ids) > 0:
+            User.objects.filter(id__in=selected_ids).delete()
+            return redirect('.')
+        return redirect('.')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
