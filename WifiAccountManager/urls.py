@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
-from .settings import MEDIA_URL, MEDIA_ROOT
+from .settings import MEDIA_URL, MEDIA_ROOT, DEBUG
 
 # from django.urls import re_path
 # from django.views.static import serve
@@ -27,3 +27,10 @@ urlpatterns = [
     path('', include('main.urls')),
     # re_path(r'^static/(?P<path>.*)$', serve,{'document_root': STATIC_ROOT}), 
 ]+static(MEDIA_URL, document_root=MEDIA_ROOT)
+
+if DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+
+    ] + urlpatterns

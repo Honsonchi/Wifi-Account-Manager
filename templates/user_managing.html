@@ -62,9 +62,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="{% url 'group_edit' Group|get_userdata_obj:member %}">
-                            {{ Group|get_userdata:member }}
-                        </a>
+                        {{ Group|get_userdata:member }}
                     </td>
                     <td>
                         {{ Device|get_device_count:member }}
