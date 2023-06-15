@@ -27,7 +27,6 @@ class HomePage(ListView):
         else:
             context['now_user'] = ''
             context['now_user_group'] = '無'
-        context['devices'] = Device.objects.select_related().all()
         
         return context
     
@@ -36,6 +35,7 @@ class HomePage(ListView):
             return Device.objects.filter(Owner__UserData=self.request.user)
         return super().get_queryset()
     
+    context_object_name = 'devices'
     template_name = 'homepage.html'
 
 # 變更密碼
@@ -66,12 +66,12 @@ class DeviceManaging(PermissionRequiredMixin, LoginRequiredMixin, ListView):
             context['now_user'] = UserInfo.objects.get(UserData=self.request.user)
         else:
             context['now_user'] = ''
-        context['devices'] = Device.objects.select_related().all()
         return context
 
     def get_queryset(self):
         return Device.objects.filter(Owner=UserInfo.objects.get(UserData=self.request.user))
 
+    context_object_name = 'devices'
     template_name = 'device_managing.html'
 
 # 裝置編輯
@@ -181,9 +181,9 @@ class GroupManaging(PermissionRequiredMixin, LoginRequiredMixin, ListView):
             context['now_user'] = UserInfo.objects.get(UserData=self.request.user)
         else:
             context['now_user'] = ''
-        context['groups'] = Group.objects.select_related().all()
         return context
     
+    context_object_name = 'groups'
     template_name = 'group_managing.html'
 
 #管理員: 群組編輯
@@ -277,9 +277,9 @@ class Manage(PermissionRequiredMixin, LoginRequiredMixin, ListView):
             context['now_user'] = UserInfo.objects.get(UserData=self.request.user)
         else:
             context['now_user'] = ''
-        context['devices'] = Device.objects.select_related().all()
         return context
 
+    context_object_name = 'devices'
     template_name = 'manage.html'
 
 #管理員編輯裝置
@@ -384,9 +384,9 @@ class UserManaging(PermissionRequiredMixin, LoginRequiredMixin, ListView):
             context['now_user'] = ''
         context['Group'] = Group.objects.all().select_related()
         context['Device'] = Device.objects.all().select_related()
-        context['members'] = UserInfo.objects.all().select_related()
         return context
     
+    context_object_name = 'members'
     template_name = 'user_managing.html'
 
 #管理員新增人員
@@ -487,15 +487,6 @@ class UserDelete(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
     
     def get_success_url(self):
         return reverse_lazy('user_managing')
-    
-    def form_valid(self, form):
-        now_user = UserInfo.objects.select_related().get(UserData=self.request.user)
-        if not self.request.user.has_perm('main.admin'): #如果不是管理員
-            if form.instance.Owner == now_user:
-                return super().form_valid(form)
-            else:
-                raise PermissionDenied()
-        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -561,9 +552,7 @@ class BatchCreateUser(PermissionRequiredMixin, LoginRequiredMixin, FormView):
             UserObj = User.objects.select_related().filter(username=str(data[0]))
             if UserObj.count() > 0:
                 UserObj0 = UserObj[0]
-                UserObj0.username = str(data[0])
                 UserObj0.set_password(str(data[1]))
-                UserObj0.save()
                 UserInfoObj = UserInfo.objects.select_related().get(UserData=UserObj0)
                 UserInfoObj.UserType = usertype
                 UserInfoObj.Name = str(data[2])
@@ -584,8 +573,8 @@ class BatchCreateUser(PermissionRequiredMixin, LoginRequiredMixin, FormView):
 
                 if content_error:
                     continue
-
-                created_user = User.objects.select_related().create_user(username=str(data[0]), password=str(data[1]))
+                
+                created_user = User.objects.create_user(username=str(data[0]), password=str(data[1]))
                 created_user.groups.add(groups.objects.select_related().get(name=str(data[3])))
                 User.save(created_user)
 
@@ -644,7 +633,7 @@ class BatchAdminDeviceCreate(PermissionRequiredMixin, LoginRequiredMixin, FormVi
             if now_user_obj.count() > 0:
                 created_device = Device.objects.create(Owner=UserInfo.objects.get(UserData=now_user_obj[0].id),
                                                        Name=str(data[1]),
-                                                       MacAddress=data[2],
+                                                       MacAddress=str(data[2]),
                                                        Note=str(data[3]))
                 Device.save(created_device)
             else:
