@@ -3,7 +3,7 @@ from .views import (HomePage, PasswordChange, DeviceManaging, DeviceEdit, Device
                     GroupManaging, GroupEdit, GroupCreate,
                     Manage, AdminDeviceEdit, AdminDeviceDelete, AdminDeviceCreate,
                     UserManaging, UserCreate, UserEdit, UserDelete,
-                    BatchCreateUser)
+                    BatchCreateUser, BatchAdminDeviceCreate)
 
 urlpatterns = [
     # 首頁路徑
@@ -39,4 +39,5 @@ urlpatterns = [
     path('user/delete/<int:userid>/', UserDelete.as_view(), name='user_delete'),
 
     path('user/create/batch/', BatchCreateUser.as_view(), name='user_batch_create'),
+    path('manage/create/batch/', BatchAdminDeviceCreate.as_view(), name='device_batch_create'),
 ]

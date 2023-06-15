@@ -513,9 +513,11 @@ class UserDelete(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
     context_object_name = 'now_delete_user'
     template_name = 'user_delete.html'
 
-class BatchCreateUser(FormView):
+class BatchCreateUser(PermissionRequiredMixin, LoginRequiredMixin, FormView):
     form_class = UploadFileForm
     template_name = 'batch_create_user.html'
+    permission_required = ['main.can_assess', 'main.admin']
+    
 
     success_url = reverse_lazy('user_managing')
 
@@ -528,7 +530,7 @@ class BatchCreateUser(FormView):
         for row in wb.iter_rows():
             data = list(map(lambda r: r.value, row))
             content_error = False
-            for i in range(len(data)):
+            for i in range(12):
                 if (str(data[i]).startswith('$') and str(data[i]).endswith('$')):
                     content_error = True
                     break
@@ -574,7 +576,7 @@ class BatchCreateUser(FormView):
                 UserInfoObj.Note = str(data[11])
                 UserInfoObj.save()
             else:
-                for i in range(len(data)):
+                for i in range(12):
                     if data[i] == None:
                         if 1 <= i and i <= 4:
                             content_error = True
@@ -605,4 +607,47 @@ class BatchCreateUser(FormView):
 
                 Group.save(group)
 
+        return super().form_valid(form)
+    
+class BatchAdminDeviceCreate(PermissionRequiredMixin, LoginRequiredMixin, FormView):
+    form_class = UploadFileForm
+    template_name = 'batch_create_device.html'
+    permission_required = ['main.can_assess', 'main.admin']
+    
+    success_url = reverse_lazy('manage')
+
+    def form_valid(self, form):
+        file = form.cleaned_data['file']
+
+        excel_file = openpyxl.load_workbook(file.open())
+        wb = excel_file.worksheets[0]
+
+        for row in wb.iter_rows():
+            data = list(map(lambda r: r.value, row))
+            content_error = False
+
+            for i in range(4):
+                if (str(data[i]).startswith('$') and str(data[i]).endswith('$')):
+                    content_error = True
+                    break
+                if data[i] == None:
+                    if i == 3:
+                        data[i] = ''
+                    else:
+                        content_error = True
+                        break
+
+            if content_error:
+                continue
+            
+            now_user_obj = User.objects.filter(username=str(data[0]))
+            if now_user_obj.count() > 0:
+                created_device = Device.objects.create(Owner=UserInfo.objects.get(UserData=now_user_obj[0].id),
+                                                       Name=str(data[1]),
+                                                       MacAddress=data[2],
+                                                       Note=str(data[3]))
+                Device.save(created_device)
+            else:
+                continue
+        
         return super().form_valid(form)
