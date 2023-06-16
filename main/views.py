@@ -520,6 +520,8 @@ class BatchCreateUser(PermissionRequiredMixin, LoginRequiredMixin, FormView):
         for row in wb.iter_rows():
             data = list(map(lambda r: r.value, row))
             content_error = False
+            if (len(data) < 13):
+                break
             for i in range(12):
                 if (str(data[i]).startswith('$') and str(data[i]).endswith('$')):
                     content_error = True
@@ -610,7 +612,8 @@ class BatchAdminDeviceCreate(PermissionRequiredMixin, LoginRequiredMixin, FormVi
 
         excel_file = openpyxl.load_workbook(file.open())
         wb = excel_file.worksheets[0]
-
+        if (wb.max_row < 5):
+            return super().form_valid(form)
         for row in wb.iter_rows():
             data = list(map(lambda r: r.value, row))
             content_error = False
