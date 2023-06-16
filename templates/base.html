@@ -58,6 +58,13 @@
                 <li class="dropdown">
                     <a class="nav-ani">{{ now_user }}</a>
                     <ul>
+                        {% if perms.main.admin %}
+                            <a href="{% url 'admin:index' %}" class="nav-ani">
+                                <li>
+                                    <p>後台</p>
+                                </li> 
+                            </a>
+                        {% endif %}
                         <a href="{% url 'password' %}" class="nav-ani">
                             <li>
                                 <p>變更密碼</p>
@@ -70,9 +77,58 @@
                         </a>
                     </ul>
                 </li>
+                <li class="dropdown min-navbar">
+                    <a class="nav-ani small">選單</a>
+                    <ul>
+                        <a href="{% url 'device_managing' %}" class="nav-ani small">
+                            <li>
+                                <p>我的裝置</p>
+                            </li>
+                        </a>
+                        {% if perms.main.admin %}
+                            <a href="{% url 'group_managing' %}" class="nav-ani small">
+                                <li>
+                                    <p>群組管理</p>
+                                </li>
+                            </a>
+                            <a href="{% url 'user_managing' %}" class="nav-ani small">
+                                <li>
+                                    <p>人員管理</p>
+                                </li>
+                            </a>
+                            <a href="{% url 'manage' %}" class="nav-ani small">
+                                <li>
+                                    <p>裝置管理</p>
+                                </li>
+                            </a>
+                        {% endif %}
+                        {% if perms.main.admin %}
+                            <a href="{% url 'admin:index' %}" class="nav-ani small">
+                                <li>
+                                    <p>後台</p>
+                                </li> 
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'password' %}" class="nav-ani small">
+                            <li>
+                                <p>變更密碼</p>
+                            </li> 
+                        </a>
+                        <a href="{% url 'logout' %}" class="nav-ani small">
+                            <li>
+                                <p>登出</p>
+                            </li> 
+                        </a>
+                    </ul>
+                </li>
             {% else %}
             <div class="nav-spacer"></div>
             <a href="{% url 'login' %}" class="nav-ani">
+                <li>
+                    <p>登入</p>
+                </li>
+            </a>
+            <a href="{% url 'login' %}" class="nav-ani small">
                 <li>
                     <p>登入</p>
                 </li>

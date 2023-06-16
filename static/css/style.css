@@ -153,7 +153,9 @@ a{
 }
 
 .login-form>div{
-    max-width: 506px;
+    /* width: 100%; */
+    /* max-width: 508.5px; */
+    width: 388.5px;
 
     border-radius: var(--radius-1);
     box-shadow: var(--shadow-1);
@@ -166,6 +168,24 @@ a{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+@media screen and (max-width: 508.5px) {
+    .login-form>div{
+        /* width: 100%; */
+        /* max-width: 508.5px; */
+        width: 100%;
+        height: 100%;
+    
+        border-radius: var(--radius-1);
+        box-shadow: var(--shadow-1);
+        padding: 60px;
+    
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 .login-form .title{
@@ -221,7 +241,8 @@ a{
 
 .input{
     position: relative;
-    width: 388.5px;
+    max-width: 388.5px;
+    width: 100%;
 }
 
 .input input{
@@ -498,6 +519,7 @@ a{
 }
 
 .dropdown>p{
+    height: 100%;
     cursor: pointer;
     text-align: center;
 }
@@ -541,6 +563,30 @@ a{
 
 .nav-ani:hover{
     font-weight: 700;
+}
+
+.navbar .min-navbar{
+    display: none;
+}
+
+@media screen and (max-width:1100px){
+    /* .nav-ani:not(.small){
+        display: none;
+    } */
+    .navbar>a ~ a:not(.small),
+    .navbar .dropdown a:not(.small){
+        display: none;
+    }
+    .small{
+        padding-left: 16px;
+        padding-right: 16px;
+        font-size: 18px;
+        color: #000000;
+        text-align: center;
+    }
+    .navbar .min-navbar{
+        display: flex;
+    }
 }
 
 /* ------------------------------ */
@@ -592,24 +638,46 @@ a{
 
 .content{
     padding-top: 150px;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 80px;
+    padding-right: 80px;
 
     min-width: 640px;
 
     display: flex;
     justify-content: center;
-    flex-flow: wrap;
+    flex-flow: no-wrap;
 }
 
 .content>.main{
     width: 80%;
-    max-width: 900px;
+    max-width: 1024px;
 }
 
 .content>.side{
     width: 380px;
+    min-width: 380px;
     padding-left: 40px;
+    display: block;
+    transition: var(--animation-speed);
+}
+
+@media screen and (min-width: 1280px) and (max-width: 1480px){
+    .content>.main{
+        width: 100%;
+    }
+    .content>.side{
+        width: 272px;
+        min-width: 272px;
+    }
+}
+
+@media screen and (max-width: 1280px){
+    .content>.main{
+        width: 100%;
+    }
+    .content>.side{
+        display: none;
+    }
 }
 
 .container{

@@ -28,9 +28,9 @@ urlpatterns = [
     # re_path(r'^static/(?P<path>.*)$', serve,{'document_root': STATIC_ROOT}), 
 ]+static(MEDIA_URL, document_root=MEDIA_ROOT)
 
-if DEBUG:
-    import debug_toolbar
-    urlpatterns = [
-        path('__debug__/', include(debug_toolbar.urls)),
+# if DEBUG:
+#     import debug_toolbar
+#     urlpatterns = [
+#         path('__debug__/', include(debug_toolbar.urls)),
 
-    ] + urlpatterns
+#     ] + urlpatterns
