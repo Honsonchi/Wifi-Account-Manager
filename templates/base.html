@@ -141,75 +141,97 @@
         <div class="main">
             {% block body %}{% endblock body %}
         </div>
-        <div class="side">
-            <div class="container">
-                <p class="title">功能表</p>
-                <div class="function">
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'device_managing' %}">
-                            <button class="sqr-button button-ani">
-                                <div class="icon icon-devices"></div>
-                                <p>我的裝置</p>
-                            </button>
-                        </a>
-                        {% if perms.main.admin %}
-                            <a href="{% url 'group_managing' %}">
+        {% if user.is_authenticated %}
+            <div class="side">
+                <div class="container">
+                    <p class="title">功能表</p>
+                    <div class="function">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'device_managing' %}">
                                 <button class="sqr-button button-ani">
-                                    <div class="icon icon-group"></div>
-                                    <p>群組管理</p>
+                                    <div class="icon icon-devices"></div>
+                                    <p>我的裝置</p>
                                 </button>
                             </a>
-                            <a href="{% url 'user_managing' %}">
+                            {% if perms.main.admin %}
+                                <a href="{% url 'group_managing' %}">
+                                    <button class="sqr-button button-ani">
+                                        <div class="icon icon-group"></div>
+                                        <p>群組管理</p>
+                                    </button>
+                                </a>
+                                <a href="{% url 'user_managing' %}">
+                                    <button class="sqr-button button-ani">
+                                        <div class="icon icon-contact_page"></div>
+                                        <p>人員管理</p>
+                                    </button>
+                                </a>
+                                <a href="{% url 'manage' %}">
+                                    <button class="sqr-button button-ani">
+                                        <div class="icon icon-folder_managed"></div>
+                                        <p>裝置管理</p>
+                                    </button>
+                                </a>
+                                <a href="{% url 'admin:index' %}">
+                                    <button class="sqr-button button-ani">
+                                        <div class="icon icon-developer_mode"></div>
+                                        <p>後台</p>
+                                    </button>
+                                </a>
+                            {% endif %}
+                            <a href="{% url 'password' %}">
                                 <button class="sqr-button button-ani">
-                                    <div class="icon icon-contact_page"></div>
-                                    <p>人員管理</p>
+                                    <div class="icon icon-password"></div>
+                                    <p>變更密碼</p>
                                 </button>
                             </a>
-                            <a href="{% url 'manage' %}">
+                            <a href="{% url 'logout' %}">
                                 <button class="sqr-button button-ani">
-                                    <div class="icon icon-folder_managed"></div>
-                                    <p>裝置管理</p>
+                                    <div class="icon icon-logout"></div>
+                                    <p>登出</p>
                                 </button>
                             </a>
-                            <a href="{% url 'admin:index' %}">
+                        {% else %}
+                            <a href="{% url 'login' %}">
                                 <button class="sqr-button button-ani">
-                                    <div class="icon icon-developer_mode"></div>
-                                    <p>後台</p>
+                                    <div class="icon icon-login"></div>
+                                    <p>登入</p>
                                 </button>
                             </a>
                         {% endif %}
-                        <a href="{% url 'password' %}">
-                            <button class="sqr-button button-ani">
-                                <div class="icon icon-password"></div>
-                                <p>變更密碼</p>
-                            </button>
-                        </a>
-                        <a href="{% url 'logout' %}">
-                            <button class="sqr-button button-ani">
-                                <div class="icon icon-logout"></div>
-                                <p>登出</p>
-                            </button>
-                        </a>
-                    {% else %}
-                        <a href="{% url 'login' %}">
-                            <button class="sqr-button button-ani">
-                                <div class="icon icon-login"></div>
-                                <p>登入</p>
-                            </button>
-                        </a>
-                    {% endif %}
+                    </div>
+                </div>
+                <div class="container">
+                    <p class="title">聯絡我們</p>
+                    <p class="inline-title">資訊組長 - 魏仲良</p>
+                    <p class="inline">dcsh313@dcsh.tp.edu.tw</p>
+                    <p class="inline">2533-4017#313</p>
+                    <p class="inline-title">資訊社</p>
+                    <p class="inline">@dzif_24th</p>
                 </div>
             </div>
-            <div class="container">
-                <p class="title">聯絡我們</p>
-                <p class="inline-title">資訊組長 - 魏仲良</p>
-                <p class="inline">dcsh313@dcsh.tp.edu.tw</p>
-                <p class="inline">2533-4017#313</p>
-                <p class="inline-title">資訊社</p>
-                <p class="inline">@dzif_24th</p>
-            </div>
-        </div>
+        {% else %}
+            <style>
+                html, body{
+                    width: 100%;
+                    height: 100%;
+                    margin: 0px 0px 0px 0px;
+                    background-image: url('/static/img/DCSHLogoVector_bg.svg');
+                    background-position: -10% center;
+                    background-size: 300% auto;
+                    background-repeat: no-repeat;
+                }
+                .content{
+                    height: calc(100% - 150px);
+                }
+                .content>.main {
+                    width: 100%;
+                    max-width: none;
+                }
+            </style>
+        {% endif %}
     </div>
     <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
+

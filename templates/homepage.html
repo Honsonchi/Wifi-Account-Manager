@@ -1,14 +1,10 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}首頁{% endblock title %}
 
 {% block body %}
-
-<!--<p>首頁</p>
-
-<p>歡迎使用大直高中無線網路帳號管理系統</p>
-
-<hr>-->
 
 {% if user.is_authenticated %}
     <div class="user-info">
@@ -54,15 +50,19 @@
     </div>
 
 {% else %}
-    <p>請登入系統以使用服務</p>
-    <a href="{% url 'login' %}">
-        <button class="button">登入</button>
-    </a>
+    
+    <div class="homepage">
+        <div class="text">
+            <p class="title-1">大直高中無線網路</p>
+            <p class="title-2">自由連網，輕鬆管理</p>
+            <p class="title-3">「讓您以最快的速度連接至無線網路」</p>
+            <a href="{% url 'login' %}">
+                <button class="primary-button large-button button-ani">登入</button>
+            </a>
+        </div>
+        <img src="{% static 'img/products.png' %}" alt="" class="img">
+    </div>
 
-    <p>沒有帳號？請至資訊組詢問狀況。</p>
-
-    <p>預設帳號：？？？</p>
-    <p>預設密碼：？？？</p>
 {% endif %}
 
 {% endblock body %}
